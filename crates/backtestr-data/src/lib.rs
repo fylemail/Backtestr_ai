@@ -1,13 +1,8 @@
+pub mod database;
 pub mod migration;
+pub mod models;
 pub mod query;
 pub mod storage;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_data_initialization() {
-        assert_eq!(2 + 2, 4);
-    }
-}
+pub use database::{Database, DatabaseError, Result};
+pub use models::Tick;
