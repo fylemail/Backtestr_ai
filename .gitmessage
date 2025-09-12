@@ -1,0 +1,19 @@
+# <type>(<scope>): <subject>
+#
+# <body>
+#
+# Story: <n.m>
+# Epic: <n>
+#
+# Type: feat, fix, docs, style, refactor, test, chore
+# Scope: core, data, ipc, ui, algorithms, ci, docs
+# Subject: imperative mood, no period at end
+#
+# Example:
+# feat(core): implement MTF state synchronization
+#
+# Added multi-timeframe bar state management with
+# sub-100μs update performance
+#
+# Story: 1.2
+# Epic: 1

@@ -12,11 +12,25 @@ architecture:
   architectureVersion: v4
   architectureSharded: true
   architectureShardedLocation: docs/architecture
-customTechnicalDocuments: null
+customTechnicalDocuments:
+  qa:
+    - docs/development/git-strategy.md
+    - docs/development/codebase-organization.md
+    - docs/architecture/performance-targets.md
+  architect:
+    - docs/development/codebase-organization.md
+    - docs/architecture/tech-stack.md
+    - docs/architecture/system-design.md
+  pm:
+    - docs/development/git-strategy.md
+    - docs/prd/epic-list.md
 devLoadAlwaysFiles:
   - docs/architecture/coding-standards.md
   - docs/architecture/tech-stack.md
   - docs/architecture/source-tree.md
+  - docs/development/git-strategy.md
+  - docs/development/codebase-organization.md
+  - CLAUDE.md
 devDebugLog: .ai/debug-log.md
 devStoryLocation: docs/stories
 slashPrefix: BMad

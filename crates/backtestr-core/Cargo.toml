@@ -1,0 +1,27 @@
+[package]
+name = "backtestr-core"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+tokio = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+pyo3 = { workspace = true }
+rayon = { workspace = true }
+crossbeam = { workspace = true }
+
+# Core-specific dependencies
+chrono = { version = "0.4", features = ["serde"] }
+ordered-float = "4.2"
+dashmap = "5.5"
+
+[dev-dependencies]
+proptest = { workspace = true }
+criterion = { workspace = true }
+

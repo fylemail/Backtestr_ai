@@ -1,0 +1,83 @@
+[package]
+name = "backtestr-ai"
+version = "0.1.0"
+edition = "2021"
+authors = ["BackTestr AI Team"]
+license = "MIT OR Apache-2.0"
+
+[[bin]]
+name = "backtestr_ai"
+path = "src/main.rs"
+
+[workspace]
+members = [
+    "crates/backtestr-core",
+    "crates/backtestr-data",
+    "crates/backtestr-ipc",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["BackTestr AI Team"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/backtestr-ai/backtestr"
+
+[workspace.dependencies]
+# Environment
+dotenv = "0.15"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rmp-serde = "1.1"  # MessagePack
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Database
+duckdb = "0.9"
+
+# Python integration
+pyo3 = { version = "0.20", features = ["extension-module", "abi3-py311"] }
+
+# Performance
+rayon = "1.8"
+crossbeam = "0.8"
+
+# Testing
+proptest = "1.4"
+criterion = "0.5"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[profile.release-with-debug]
+inherits = "release"
+strip = false
+debug = true
+
+[profile.bench]
+inherits = "release"
+
+[dependencies]
+dotenv = { workspace = true }
+anyhow = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+backtestr-core = { path = "crates/backtestr-core" }
+backtestr-data = { path = "crates/backtestr-data" }
+backtestr-ipc = { path = "crates/backtestr-ipc" }
+
