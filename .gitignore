@@ -1,6 +1,3 @@
-# Documentation files
-docs/
-
 # Ignored files folder
 .ignore/
 
@@ -8,27 +5,95 @@ docs/
 target/
 **/*.rs.bk
 Cargo.lock
+tarpaulin-report.html
+cobertura.xml
 
 # Node.js
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+pnpm-lock.yaml
 
 # Electron
 dist/
 out/
 build/
+*.unpacked/
+electron-builder.yml
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env.local
+.pytest_cache/
+.coverage
+htmlcov/
+.hypothesis/
+
+# Database
+*.duckdb
+*.duckdb.wal
+*.duckdb.tmp
+data/tick/*
+data/bars/*
+data/results/*
+data/cache/*
+!data/**/.gitkeep
+
+# Environment files
+.env.local
+.env.*.local
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
+*.sublime-*
+.project
+.classpath
 
 # OS
 .DS_Store
 Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Logs
+logs/
+*.log
+lerna-debug.log*
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+
+# Documentation
+docs/_build/
+site/
 
 # BMad temp files
 .ai/
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*~
+
+# Security - never commit credentials
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx

@@ -1,0 +1,26 @@
+[package]
+name = "backtestr-data"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+tokio = { workspace = true }
+thiserror = { workspace = true }
+anyhow = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+# TODO: Re-enable for Epic 2 - currently has arrow-arith compatibility issue
+# duckdb = { workspace = true }
+
+# Data-specific dependencies
+arrow = "56.1"
+parquet = "56.1"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+
+[dev-dependencies]
+tempfile = "3.8"
+proptest = { workspace = true }
