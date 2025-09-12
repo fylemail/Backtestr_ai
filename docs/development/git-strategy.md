@@ -196,15 +196,15 @@ jobs:
 
 ### Progressive Test Requirements
 
-| Epic | Component | Required Checks | Optional Checks |
-|------|-----------|-----------------|-----------------|
-| 1 | Infrastructure | Structure, Cargo.toml validity | - |
-| 2 | Data Pipeline | Rust tests, DuckDB connection | Performance benchmarks |
-| 3 | MTF Engine | State consistency tests | Backtesting validation |
-| 4 | Python Bridge | PyO3 compilation | Algorithm execution |
-| 5 | Frontend | TypeScript compilation | React component tests |
-| 6 | Charting | - | Canvas rendering tests |
-| 7 | Analytics | Statistical accuracy | Report generation |
+| Epic | Component | Required Checks | When to Enable |
+|------|-----------|-----------------|----------------|
+| 1 | Core + Basic DuckDB | Rust fmt/clippy/test | **ACTIVE NOW** |
+| 2 | Advanced Data | DuckDB performance | When Epic 2 starts |
+| 3 | MTF Engine | State consistency | When Epic 3 starts |
+| 4 | Python Bridge | PyO3 + pytest | When Epic 4 starts |
+| 5 | Frontend | TypeScript + Jest | When Epic 5 starts |
+| 6 | Charting | Canvas tests | When Epic 6 starts |
+| 7 | Analytics | Statistical tests | When Epic 7 starts |
 
 ## Story Completion Criteria (BMad Method)
 

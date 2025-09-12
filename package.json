@@ -9,38 +9,33 @@
     "type": "git",
     "url": "https://github.com/backtestr-ai/backtestr"
   },
-  "engines": {
-    "node": ">=20.0.0",
-    "pnpm": ">=8.0.0"
-  },
   "scripts": {
-    "dev": "node scripts/dev.js",
-    "build": "node scripts/build.js",
-    "test": "pnpm run test:rust && pnpm run test:js && pnpm run test:python",
-    "test:rust": "cargo test --all",
-    "test:js": "pnpm -r test",
-    "test:python": "pytest algorithms/tests/",
-    "lint": "pnpm run lint:rust && pnpm run lint:js && pnpm run lint:python",
-    "lint:rust": "cargo clippy --all -- -D warnings",
-    "lint:js": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:python": "ruff check algorithms/",
-    "format": "pnpm run format:rust && pnpm run format:js && pnpm run format:python",
-    "format:rust": "cargo fmt --all",
-    "format:js": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "format:python": "black algorithms/ && isort algorithms/",
-    "clean": "pnpm -r clean && cargo clean",
-    "postinstall": "electron-builder install-app-deps"
+    "dev": "cargo watch -x 'run'",
+    "build": "cargo build --release",
+    "test": "cargo test --all",
+    "lint": "cargo clippy --all -- -D warnings",
+    "format": "cargo fmt --all",
+    "clean": "cargo clean"
   },
-  "devDependencies": {
-    "@types/node": "^20.10.0",
-    "electron": "^28.0.0",
-    "electron-builder": "^24.9.0",
-    "eslint": "^8.55.0",
-    "prettier": "^3.1.0",
-    "typescript": "^5.3.0"
+  "epicStatus": {
+    "epic1": "active",
+    "epic2": "not-started",
+    "epic3": "not-started",
+    "epic4": "not-started",
+    "epic5": "not-started",
+    "epic6": "not-started",
+    "epic7": "not-started"
   },
-  "workspaces": [
-    "electron",
-    "electron/renderer"
-  ]
+  "futureDependencies": {
+    "_comment": "These will be added when their epics start",
+    "epic5": {
+      "electron": "^28.0.0",
+      "electron-builder": "^24.9.0",
+      "typescript": "^5.3.0",
+      "@types/node": "^20.10.0"
+    },
+    "epic4": {
+      "python": "3.11+"
+    }
+  }
 }

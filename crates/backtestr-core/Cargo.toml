@@ -12,7 +12,8 @@ anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tracing = { workspace = true }
-pyo3 = { workspace = true }
+# Epic 4: Python integration - not needed yet
+# pyo3 = { workspace = true }
 rayon = { workspace = true }
 crossbeam = { workspace = true }
 

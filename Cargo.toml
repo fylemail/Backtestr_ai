@@ -13,7 +13,8 @@ path = "src/main.rs"
 members = [
     "crates/backtestr-core",
     "crates/backtestr-data",
-    "crates/backtestr-ipc",
+    # Epic 5: IPC for frontend - not needed yet
+    # "crates/backtestr-ipc",
 ]
 resolver = "2"
 
@@ -48,8 +49,8 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 # TODO: Re-enable for Epic 2 - currently has arrow-arith compatibility issue
 # duckdb = "0.9"
 
-# Python integration
-pyo3 = { version = "0.20", features = ["extension-module", "abi3-py39"] }
+# Epic 4: Python integration - not needed yet
+# pyo3 = { version = "0.20", features = ["extension-module", "abi3-py39"] }
 
 # Performance
 rayon = "1.8"
@@ -81,5 +82,13 @@ tracing = { workspace = true }
 tracing-subscriber = { workspace = true }
 backtestr-core = { path = "crates/backtestr-core" }
 backtestr-data = { path = "crates/backtestr-data" }
-backtestr-ipc = { path = "crates/backtestr-ipc" }
+# Epic 5: IPC - not needed yet
+# backtestr-ipc = { path = "crates/backtestr-ipc" }
+
+[features]
+default = []
+epic_2 = []  # Advanced data features
+epic_3 = []  # MTF engine
+epic_4 = []  # Python integration
+epic_5 = []  # Frontend/IPC
 

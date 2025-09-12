@@ -1,4 +1,6 @@
-use anyhow::{Context, Result};
+#![allow(dead_code)] // Will be used in Epic 2
+
+use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::env;

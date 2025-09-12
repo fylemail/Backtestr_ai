@@ -122,7 +122,7 @@ static FEATURES: OnceLock<Features> = OnceLock::new();
 
 /// Get the global features instance
 pub fn features() -> &'static Features {
-    FEATURES.get_or_init(|| Features::from_env())
+    FEATURES.get_or_init(Features::from_env)
 }
 
 /// Initialize features with custom configuration (for testing)

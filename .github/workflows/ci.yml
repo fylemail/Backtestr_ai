@@ -1,0 +1,63 @@
+name: CI
+
+# Simple, focused CI for Epic 1 development
+# Will grow progressively as epics are completed
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # Single job for Epic 1 - Rust only
+  epic-1-validation:
+    name: Epic 1 - Core Validation
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: rustfmt, clippy
+    
+    - name: Cache Rust Dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/bin/
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          ~/.cargo/git/db/
+          target/
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-cargo-
+    
+    - name: Format Check
+      run: cargo fmt --all -- --check
+    
+    - name: Clippy Linting
+      run: cargo clippy --all-targets --all-features -- -D warnings
+    
+    - name: Build
+      run: cargo build --all --verbose
+    
+    - name: Test
+      run: cargo test --all --verbose
+    
+    - name: Documentation
+      run: cargo doc --no-deps --all-features
+    
+    # Future Epic Additions (commented out for clarity)
+    # Epic 2-3: Add DuckDB integration tests
+    # Epic 4: Add Python checks
+    # Epic 5: Add Node.js/TypeScript checks
+    # Epic 6: Add UI rendering tests
+    # Epic 7: Add statistical validation

@@ -25,12 +25,15 @@ customTechnicalDocuments:
     - docs/development/git-strategy.md
     - docs/prd/epic-list.md
 devLoadAlwaysFiles:
+  # Epic 1 Focus - Only load what's relevant now
   - docs/architecture/coding-standards.md
-  - docs/architecture/tech-stack.md
-  - docs/architecture/source-tree.md
+  - docs/prd/epic-1-foundation-core-data-pipeline.md
+  - docs/development/progressive-development-audit.md
   - docs/development/git-strategy.md
-  - docs/development/codebase-organization.md
   - CLAUDE.md
+  # Deferred until needed:
+  # - docs/architecture/tech-stack.md  # Has Python/React info
+  # - docs/architecture/source-tree.md  # Shows future structure
 devDebugLog: .ai/debug-log.md
 devStoryLocation: docs/stories
 slashPrefix: BMad

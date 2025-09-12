@@ -1,9 +1,11 @@
 mod config;
+
+// Epic 2: Credentials (deferred)
+#[cfg(feature = "epic_2")]
 mod credentials;
 
 use anyhow::Result;
 use tracing::info;
-use tracing_subscriber;
 
 fn main() -> Result<()> {
     tracing_subscriber::fmt::init();
