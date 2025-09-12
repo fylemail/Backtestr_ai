@@ -1,5 +1,5 @@
 //! Core MTF engine and state management for BackTestr AI
-//! 
+//!
 //! This crate provides the multi-timeframe state engine that maintains
 //! synchronized bar states across 6 timeframes with sub-100μs updates.
 
