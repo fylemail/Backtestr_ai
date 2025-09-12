@@ -2,9 +2,10 @@ name: Full Build and Test (Optional)
 
 on:
   push:
-    branches: [ main, master, develop ]
-  pull_request:
-    branches: [ main, master, develop ]
+    branches: [ main, master ]
+  # Disabled for PRs - using Progressive CI instead
+  # pull_request:
+  #   branches: [ main, master, develop ]
   workflow_dispatch:
 
 env:
