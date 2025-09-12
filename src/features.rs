@@ -115,26 +115,22 @@ impl Default for Features {
     }
 }
 
+use std::sync::OnceLock;
+
 /// Global feature flag instance
-static mut FEATURES: Option<Features> = None;
-static FEATURES_INIT: std::sync::Once = std::sync::Once::new();
+static FEATURES: OnceLock<Features> = OnceLock::new();
 
 /// Get the global features instance
 pub fn features() -> &'static Features {
-    unsafe {
-        FEATURES_INIT.call_once(|| {
-            FEATURES = Some(Features::from_env());
-        });
-        FEATURES.as_ref().expect("Features not initialized")
-    }
+    FEATURES.get_or_init(|| Features::from_env())
 }
 
 /// Initialize features with custom configuration (for testing)
 #[cfg(test)]
 pub fn init_features_with(features: Features) {
-    unsafe {
-        FEATURES = Some(features);
-    }
+    // For testing, we'll just use the regular initialization
+    // This is safer than trying to override a OnceLock
+    let _ = FEATURES.set(features);
 }
 
 #[cfg(test)]
