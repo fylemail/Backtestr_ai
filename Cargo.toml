@@ -48,7 +48,7 @@ tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 duckdb = "0.9"
 
 # Python integration
-pyo3 = { version = "0.20", features = ["extension-module", "abi3-py311"] }
+pyo3 = { version = "0.20", features = ["extension-module", "abi3-py39"] }
 
 # Performance
 rayon = "1.8"
