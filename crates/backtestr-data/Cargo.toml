@@ -12,7 +12,8 @@ anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tracing = { workspace = true }
-duckdb = { workspace = true }
+# TODO: Re-enable for Epic 2 - currently has arrow-arith compatibility issue
+# duckdb = { workspace = true }
 
 # Data-specific dependencies
 arrow = "56.1"

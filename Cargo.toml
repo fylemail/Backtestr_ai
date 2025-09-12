@@ -45,7 +45,8 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Database
-duckdb = "0.9"
+# TODO: Re-enable for Epic 2 - currently has arrow-arith compatibility issue
+# duckdb = "0.9"
 
 # Python integration
 pyo3 = { version = "0.20", features = ["extension-module", "abi3-py39"] }
