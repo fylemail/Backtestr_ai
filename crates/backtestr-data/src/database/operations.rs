@@ -6,7 +6,7 @@ use rusqlite::params;
 
 impl Database {
     pub fn insert_tick(&self, tick: &Tick) -> Result<()> {
-        let sql = "INSERT INTO ticks (symbol, timestamp, bid, ask, bid_size, ask_size) 
+        let sql = "INSERT INTO ticks (symbol, timestamp, bid, ask, bid_size, ask_size)
                    VALUES (?, ?, ?, ?, ?, ?)";
 
         self.connection()
@@ -14,7 +14,7 @@ impl Database {
                 sql,
                 params![
                     tick.symbol,
-                    tick.timestamp.to_rfc3339(),
+                    tick.timestamp,
                     tick.bid,
                     tick.ask,
                     tick.bid_size,
@@ -28,7 +28,7 @@ impl Database {
 
     pub fn insert_ticks(&self, ticks: &[Tick]) -> Result<()> {
         // Use prepared statements for batch insert
-        let sql = "INSERT INTO ticks (symbol, timestamp, bid, ask, bid_size, ask_size) 
+        let sql = "INSERT INTO ticks (symbol, timestamp, bid, ask, bid_size, ask_size)
                    VALUES (?, ?, ?, ?, ?, ?)";
 
         let mut stmt = self
@@ -39,7 +39,7 @@ impl Database {
         for tick in ticks {
             stmt.execute(params![
                 tick.symbol,
-                tick.timestamp.to_rfc3339(),
+                tick.timestamp,
                 tick.bid,
                 tick.ask,
                 tick.bid_size,
@@ -51,14 +51,49 @@ impl Database {
         Ok(())
     }
 
+    pub fn insert_batch(&mut self, ticks: &[Tick]) -> Result<()> {
+        // Use transaction for batch insert performance
+        let conn = self.connection_mut();
+        let tx = conn
+            .transaction()
+            .map_err(|e| DatabaseError::InsertError(e.to_string()))?;
+
+        {
+            let sql =
+                "INSERT OR IGNORE INTO ticks (symbol, timestamp, bid, ask, bid_size, ask_size)
+                       VALUES (?, ?, ?, ?, ?, ?)";
+
+            let mut stmt = tx
+                .prepare(sql)
+                .map_err(|e| DatabaseError::InsertError(e.to_string()))?;
+
+            for tick in ticks {
+                stmt.execute(params![
+                    tick.symbol,
+                    tick.timestamp,
+                    tick.bid,
+                    tick.ask,
+                    tick.bid_size,
+                    tick.ask_size
+                ])
+                .map_err(|e| DatabaseError::InsertError(e.to_string()))?;
+            }
+        }
+
+        tx.commit()
+            .map_err(|e| DatabaseError::InsertError(e.to_string()))?;
+
+        Ok(())
+    }
+
     pub fn query_ticks(
         &self,
         symbol: &str,
         start: DateTime<Utc>,
         end: DateTime<Utc>,
     ) -> Result<Vec<Tick>> {
-        let sql = "SELECT symbol, timestamp, bid, ask, bid_size, ask_size 
-                   FROM ticks 
+        let sql = "SELECT id, symbol, timestamp, bid, ask, bid_size, ask_size
+                   FROM ticks
                    WHERE symbol = ? AND timestamp >= ? AND timestamp <= ?
                    ORDER BY timestamp";
 
@@ -69,26 +104,16 @@ impl Database {
 
         let ticks = stmt
             .query_map(
-                params![symbol, start.to_rfc3339(), end.to_rfc3339()],
+                params![symbol, start.timestamp_millis(), end.timestamp_millis()],
                 |row| {
-                    let timestamp_str: String = row.get(1)?;
-                    let timestamp = DateTime::parse_from_rfc3339(&timestamp_str)
-                        .map_err(|e| {
-                            rusqlite::Error::FromSqlConversionFailure(
-                                1,
-                                rusqlite::types::Type::Text,
-                                Box::new(e),
-                            )
-                        })?
-                        .with_timezone(&Utc);
-
                     Ok(Tick {
-                        symbol: row.get(0)?,
-                        timestamp,
-                        bid: row.get(2)?,
-                        ask: row.get(3)?,
-                        bid_size: row.get(4)?,
-                        ask_size: row.get(5)?,
+                        id: row.get(0)?,
+                        symbol: row.get(1)?,
+                        timestamp: row.get(2)?,
+                        bid: row.get(3)?,
+                        ask: row.get(4)?,
+                        bid_size: row.get(5)?,
+                        ask_size: row.get(6)?,
                     })
                 },
             )
@@ -129,7 +154,7 @@ impl Database {
             .connection()
             .execute(
                 "DELETE FROM ticks WHERE timestamp >= ? AND timestamp <= ?",
-                params![start.to_rfc3339(), end.to_rfc3339()],
+                params![start.timestamp_millis(), end.timestamp_millis()],
             )
             .map_err(|e| DatabaseError::QueryError(e.to_string()))?;
 

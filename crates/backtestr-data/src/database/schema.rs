@@ -3,13 +3,14 @@ use rusqlite::Connection;
 
 const TICK_TABLE_SCHEMA: &str = r#"
 CREATE TABLE IF NOT EXISTS ticks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     symbol TEXT NOT NULL,
-    timestamp TEXT NOT NULL,
+    timestamp INTEGER NOT NULL,
     bid REAL NOT NULL,
     ask REAL NOT NULL,
     bid_size INTEGER,
     ask_size INTEGER,
-    PRIMARY KEY (symbol, timestamp)
+    UNIQUE(symbol, timestamp)
 )"#;
 
 const TICK_INDEX_SCHEMA: &str = r#"
