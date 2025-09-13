@@ -96,6 +96,26 @@ clap = { version = "4", features = ["derive"] }
 comfy-table = "7"
 chrono = "0.4"
 
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+tempfile = "3.8"
+
+[[bench]]
+name = "tick_insertion"
+harness = false
+
+[[bench]]
+name = "query_performance"
+harness = false
+
+[[bench]]
+name = "csv_import"
+harness = false
+
+[[bench]]
+name = "memory_usage"
+harness = false
+
 [features]
 default = []
 epic_2 = []  # Advanced data features
