@@ -12,6 +12,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
 
 jobs:
   # Single job for Epic 1 - Rust only
@@ -50,6 +51,7 @@ jobs:
       run: cargo build --all --verbose
     
     - name: Test
+      timeout-minutes: 15
       run: cargo test --all --verbose
     
     - name: Documentation

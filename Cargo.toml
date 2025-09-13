@@ -46,8 +46,8 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Database
-# Using DuckDB without bundled to speed up builds (requires DuckDB installed)
-duckdb = { version = "1.3" }
+# Using bundled feature for consistent builds
+duckdb = { version = "1.3", features = ["bundled"] }
 
 # Epic 4: Python integration - not needed yet
 # pyo3 = { version = "0.20", features = ["extension-module", "abi3-py39"] }
