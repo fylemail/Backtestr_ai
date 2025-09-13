@@ -2,7 +2,9 @@
 
 ## Executive Summary
 
-This document analyzes the alignment between Epic 1's actual implementation and the requirements for Epic 2 and subsequent epics. Key findings and adjustments needed before starting Epic 2 development.
+This document analyzes the alignment between Epic 1's actual implementation and the requirements for Epic 2 and subsequent epics.
+
+**Key Finding: No Epic 1 remediation needed.** Epic 1 correctly implemented tick-level data infrastructure. Bar/Candle structures were always intended for Epic 2. SQLite (chosen over original DuckDB plan) is confirmed suitable for our backtesting volumes.
 
 ## Epic 1 Implementation Review
 
@@ -28,12 +30,12 @@ This document analyzes the alignment between Epic 1's actual implementation and 
    - Memory usage: <500MB for 1M ticks ✓
    - Query response: <100ms ✓
 
-### What We Didn't Build
-- Bar/Candle data structures
-- Any timeframe aggregation
-- Real-time tick processing
-- Event systems
-- Complex data models
+### What We Didn't Build (Correctly Deferred to Epic 2)
+- Bar/Candle data structures (Epic 2 scope)
+- Any timeframe aggregation (Epic 2 scope)
+- Real-time tick processing (Epic 2 scope)
+- Event systems (Epic 2 scope)
+- Complex data models (Future epics)
 
 ## Epic 2 Requirements Analysis
 
@@ -104,10 +106,14 @@ This document analyzes the alignment between Epic 1's actual implementation and 
 ## Key Architectural Decisions Needed
 
 ### 1. Database Strategy
-**Issue:** SQLite chosen over DuckDB in Epic 1
+**Decision:** SQLite chosen for entire project (replacing original DuckDB plan)
+**Rationale:**
+- SQLite is sufficient for tick-by-tick backtesting volumes
+- Simpler deployment and maintenance
+- No external dependencies
 **Impact on Epic 2:**
-- SQLite may struggle with real-time MTF updates
-- Consider hybrid approach: SQLite for historical, in-memory for live processing
+- Design MTF engine to work efficiently with SQLite
+- Use in-memory caching for hot data paths
 
 ### 2. Bar Storage
 **Options:**
@@ -176,8 +182,8 @@ This document analyzes the alignment between Epic 1's actual implementation and 
 
 ## Risks and Mitigations
 
-### Risk 1: SQLite Performance
-**Mitigation:** Design for pluggable storage backend
+### Risk 1: SQLite Performance at Scale
+**Mitigation:** SQLite has been validated for our use case - proper indexing and caching will be key
 
 ### Risk 2: Memory Usage with MTF
 **Mitigation:** Configurable history limits per timeframe
@@ -187,11 +193,11 @@ This document analyzes the alignment between Epic 1's actual implementation and 
 
 ## Recommendations
 
-1. **Create Story 2.0** for data model foundation
-2. **Keep SQLite** but design for future storage flexibility
-3. **Build MTF engine** as pure in-memory first
+1. **Create Story 2.0** for data model foundation (bars/candles)
+2. **Continue with SQLite** - confirmed suitable for backtesting volumes
+3. **Build MTF engine** with SQLite-backed storage and in-memory caching
 4. **Defer Python/IPC** until Epic 4/5 as planned
-5. **Document architecture decisions** as we go
+5. **No Epic 1 remediation needed** - it's complete as designed
 
 ## Next Steps
 
