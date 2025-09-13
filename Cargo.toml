@@ -6,6 +6,10 @@ authors = ["BackTestr AI Team"]
 license = "MIT OR Apache-2.0"
 
 [[bin]]
+name = "backtestr"
+path = "src/bin/backtestr.rs"
+
+[[bin]]
 name = "backtestr_ai"
 path = "src/main.rs"
 
@@ -86,6 +90,11 @@ backtestr-core = { path = "crates/backtestr-core" }
 backtestr-data = { path = "crates/backtestr-data" }
 # Epic 5: IPC - not needed yet
 # backtestr-ipc = { path = "crates/backtestr-ipc" }
+
+# CLI dependencies for Story 1.4
+clap = { version = "4", features = ["derive"] }
+comfy-table = "7"
+chrono = "0.4"
 
 [features]
 default = []
