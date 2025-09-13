@@ -86,7 +86,6 @@ fn test_file_persistence() -> Result<()> {
 
 #[test]
 fn test_concurrent_access() -> Result<()> {
-    use std::sync::Arc;
     use std::thread;
 
     let temp_dir = tempdir().unwrap();
@@ -100,11 +99,11 @@ fn test_concurrent_access() -> Result<()> {
     let tick = Tick::new("EURUSD".to_string(), now, 1.0921, 1.0923);
     db.insert_tick(&tick)?;
 
-    // Note: DuckDB handles concurrent reads well but writes should be serialized
+    // Note: SQLite with WAL mode handles concurrent reads well
     // This test verifies basic concurrent read operations work
 
     let handles: Vec<_> = (0..3)
-        .map(|i| {
+        .map(|_i| {
             let path = db_path.clone();
             thread::spawn(move || -> Result<()> {
                 let db = Database::new_file(&path)?;

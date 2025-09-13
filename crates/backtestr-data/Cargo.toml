@@ -15,8 +15,9 @@ tracing = { workspace = true }
 rusqlite = { workspace = true }
 
 # Data-specific dependencies
-arrow = "56.1"
-parquet = "56.1"
+# Arrow/Parquet deferred to Epic 2 for advanced analytics
+# arrow = "56.1"
+# parquet = "56.1"
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1.6", features = ["v4", "serde"] }
 

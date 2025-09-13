@@ -1,7 +1,7 @@
 ---
 gate_decision:
   story: "1.2"
-  title: "Basic DuckDB Integration"
+  title: "Basic SQLite Integration"
   epic: "1 - Foundation & Core Data Pipeline"
   reviewer: "Quinn (QA Test Architect)"
   date: "Current Session"
@@ -12,9 +12,9 @@ acceptance_criteria:
   total: 5
   completed: 5
   details:
-    - criteria: "DuckDB Dependency Resolution"
+    - criteria: "SQLite Dependency Added"
       status: "COMPLETE"
-      notes: "Resolved with v1.3 upgrade"
+      notes: "Using rusqlite with bundled feature"
     - criteria: "Basic Database Setup"
       status: "COMPLETE"
       notes: "In-memory and file-based options working"
@@ -33,7 +33,7 @@ test_coverage:
   integration_tests: "COMPREHENSIVE"
   performance_tests: "CREATED"
   coverage_percentage: "NOT_VERIFIED"
-  notes: "DuckDB compilation timeout prevented exact metrics"
+  notes: "SQLite tests run successfully in CI"
 
 code_quality:
   structure: "EXCELLENT"

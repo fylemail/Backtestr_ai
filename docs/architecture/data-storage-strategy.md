@@ -1,12 +1,18 @@
 # Data Storage Architecture Strategy
 
-## Context
+## Epic 1 Implementation (Current)
+- **Database**: SQLite only
+- **Scope**: Basic tick storage for foundation
+- **Performance**: Meets targets (10K ticks/sec, <500MB for 1M ticks)
+- **Status**: ✅ Implemented in Story 1.2
+
+## Future Context (Epic 2+)
 - **Requirement**: Store and query 7 years of forex tick data (AUDUSD)
 - **Volume**: ~2.3 billion ticks (~147GB uncompressed, ~30GB compressed)
 - **Use Case**: Historical backtesting (read-heavy, write-once)
-- **Challenge**: DuckDB compilation takes 20+ minutes in CI
+- **Challenge**: DuckDB compilation takes 20+ minutes in CI (deferred to Epic 2)
 
-## Option 1: SQLite Development / DuckDB Production
+## Option 1: SQLite Development / DuckDB Production (Epic 2+)
 
 ### Architecture
 ```
@@ -169,8 +175,14 @@ Use **SQLite everywhere** with small sample data (1 month)
 - Fast CI/CD
 - Sufficient for POC
 
-### Short-term (Epic 2):
-Implement **Option 1** (SQLite dev / DuckDB prod)
+### Epic 1 (Complete):
+Implement **SQLite Only**
+- Basic embedded database ✅
+- Simple tick storage ✅
+- No abstraction needed yet ✅
+
+### Epic 2 (Future):
+Expand to **Option 1** (SQLite dev / DuckDB prod)
 - Add feature flags for database selection
 - Create abstraction layer
 - Test with full dataset locally

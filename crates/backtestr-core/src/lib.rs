@@ -13,8 +13,6 @@ pub use engine::MTFEngine;
 
 #[cfg(test)]
 mod tests {
-    use super::*;
-
     #[test]
     fn test_core_initialization() {
         assert_eq!(2 + 2, 4);
