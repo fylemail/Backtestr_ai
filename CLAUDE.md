@@ -18,7 +18,7 @@
 ## What We're Building NOW (Epic 1)
 
 ✅ **Rust Core Engine** - Basic tick processing  
-✅ **Simple DuckDB** - Basic data storage (no optimization)  
+✅ **Simple SQLite** - Basic data storage (no optimization)  
 ✅ **Tick Data Ingestion** - CSV/simple formats only  
 ✅ **Basic CLI** - Simple command interface  
 
@@ -85,7 +85,7 @@ pub mod core_features;  // Always built
 
 ```bash
 # Branch naming for Epic 1
-git checkout -b story/STORY-1.2-basic-duckdb
+git checkout -b story/STORY-1.2-basic-sqlite
 
 # Don't create branches for future epics yet
 # ❌ story/STORY-5.1-frontend
@@ -109,7 +109,7 @@ git checkout -b story/STORY-1.2-basic-duckdb
 
 ### Epic 1 Tests
 - Unit tests for data structures
-- Integration tests for DuckDB
+- Integration tests for SQLite
 - Basic performance benchmarks
 
 ### NOT Required Yet
@@ -120,7 +120,7 @@ git checkout -b story/STORY-1.2-basic-duckdb
 ## Epic 1 Completion Checklist
 
 - [ ] Story 1.1: Project setup ✅
-- [ ] Story 1.2: Basic DuckDB integration
+- [ ] Story 1.2: Basic SQLite integration
 - [ ] Story 1.3: CSV tick data ingestion
 - [ ] Story 1.4: Simple query interface
 - [ ] Story 1.5: Basic performance optimization

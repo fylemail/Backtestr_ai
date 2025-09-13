@@ -1,259 +1,233 @@
-# Epic 1: Foundation & Infrastructure Sequencing
+# Epic 1: Foundation & Core Data Pipeline (Progressive)
 
-**Goal:** Establish properly sequenced foundational infrastructure that eliminates development bottlenecks and rework. This epic addresses critical infrastructure sequencing issues identified in the PO validation review and ensures all subsequent features have solid architectural foundations.
+**Goal:** Establish a minimal, working foundation using progressive development principles. Focus on Rust core engine and basic data pipeline only. No Python, no frontend, no advanced features.
 
-**⚠️ CRITICAL:** This epic has been restructured to address infrastructure sequencing dependencies. Stories must be completed in the specified order to avoid blocking dependencies.
+**Progressive Development Context:** This epic has been restructured following CLAUDE.md principles. Only includes what's absolutely necessary for a working foundation. Advanced features are properly deferred to later epics.
 
-## Story 1.1: Project Infrastructure Setup (Enhanced)
+## Epic Overview
 
-**As a** developer,  
-**I want** a properly configured monorepo with environment-aware tooling,  
-**so that** I can efficiently develop across all environments without configuration conflicts.
+### What We're Building
+- ✅ Rust workspace structure
+- ✅ Basic SQLite integration  
+- ✅ Simple CSV import
+- ✅ Basic CLI for queries
+- ✅ Performance validation
 
-### Acceptance Criteria
-1: Monorepo structure created with separate packages for Rust engine, Python analysis, and React UI
-2: Cargo workspace configured for Rust components with shared dependencies
-3: Package.json configured with npm/yarn workspaces for JavaScript packages
-4: **NEW**: Environment-specific configuration system (.env.development, .env.ci, .env.production)
-5: **NEW**: Configuration validation and error handling for all environments
-6: Development environment scripts created for building, testing, and running all components
-7: Git repository initialized with .gitignore for all languages
-8: Foundation CI/CD pipeline configured with GitHub Actions for Windows deployment
-9: **NEW**: Credential management foundation with secure defaults
-10: README.md with setup instructions and architecture overview
-11: Development dependencies installed (Rust toolchain, Node.js 20, Python 3.11+)
+### What We're NOT Building (Deferred)
+- ❌ Python integration → Epic 4
+- ❌ Frontend/Electron → Epic 5
+- ❌ IPC architecture → Epic 5
+- ❌ Advanced credentials → Epic 2
+- ❌ MTF state engine → Epic 3
+- ❌ Service architecture → Epic 3
+- ❌ Complex optimizations → Epic 2
 
-## Story 1.2: IPC Architecture Foundation (NEW - CRITICAL)
+## Stories
 
-**As a** system architect,  
-**I want** the inter-process communication architecture established,  
-**so that** all services can communicate reliably before any complex business logic is implemented.
-
-**⚠️ TIMING:** Must be completed before any service or data layer work begins.
-
-### Acceptance Criteria
-1: MessagePack-based IPC protocol specification defined and documented
-2: Rust IPC server foundation implemented with connection management
-3: Electron preload script IPC bridge implementation completed
-4: Python PyO3 bridge basic structure established
-5: End-to-end "ping-pong" test working across all three layers (Rust ↔ Electron ↔ Python)
-6: Error handling and connection recovery mechanisms implemented
-7: Performance baseline established: <1ms request-response latency
-8: IPC protocol documentation complete with examples
-9: Foundation ready for service layer implementation
-
-## Story 1.3: DuckDB Integration and Schema (Moved)
-
-**As a** system architect,  
-**I want** DuckDB embedded and configured with optimized schemas,  
-**so that** we can efficiently store and query massive tick datasets through established IPC channels.
-
-**📋 DEPENDENCY:** Requires Story 1.2 (IPC Architecture) completion.
-
-### Acceptance Criteria
-1: DuckDB embedded library integrated with Rust via duckdb-rs
-2: Schema created for ticks table with proper partitioning by date
-3: Schema created for bars_cache, backtests, trades, and positions tables
-4: Connection pooling implemented for concurrent access
-5: Basic CRUD operations working for all tables
-6: **NEW**: Database operations exposed through IPC for frontend access
-7: Compression verified achieving 10x+ ratio on sample tick data
-8: Memory-mapped file access configured for large datasets
-9: Database initialization script created for fresh installs
-10: **NEW**: Database health monitoring exposed via IPC
-
-## Story 1.4: Core Service Layer Structure (NEW)
-
-**As a** system architect,  
-**I want** the foundational service architecture established,  
-**so that** business logic can be properly organized and services can communicate effectively.
-
-**📋 DEPENDENCY:** Requires Stories 1.2 (IPC) and 1.3 (Database) completion.
-
-### Acceptance Criteria
-1: Service registry and discovery mechanism implemented
-2: Request/response patterns standardized across all services
-3: Service health monitoring foundation established
-4: Error propagation across service boundaries implemented
-5: Basic service lifecycle management (start, stop, restart)
-6: Performance monitoring hooks in place for all services
-7: Service configuration management integrated
-8: Inter-service communication patterns documented
-9: Foundation ready for specific business service implementation
-
-## Story 1.5: Tick Data Import Pipeline (Moved)
-
-**As a** trader,  
-**I want** to import tick data from various formats through the established service architecture,  
-**so that** I can use data from different providers with proper error handling and monitoring.
-
-**📋 DEPENDENCY:** Requires Stories 1.3 (Database) and 1.4 (Service Layer) completion.
-
-### Acceptance Criteria
-1: CSV import working for Dukascopy format (timestamp, bid, ask, bid_volume, ask_volume)
-2: Binary format parser implemented for faster imports
-3: Data validation ensuring no gaps, duplicates, or corrupted values
-4: Import progress reporting with estimated time remaining via IPC
-5: Ability to resume interrupted imports
-6: Import speed of at least 1 million ticks per second
-7: Error handling with detailed messages for malformed data
-8: **NEW**: Import service properly integrated with service layer architecture
-9: Sample tick data included for EUR/USD for testing
-10: **NEW**: Import monitoring and health checks implemented
-
-## Story 1.6: Multi-Stack Testing Foundation (NEW - CRITICAL)
+## Story 1.1: Project Infrastructure Setup ✅ COMPLETE
 
 **As a** developer,  
-**I want** comprehensive testing frameworks established across all technology stacks,  
-**so that** I can test complex integrations and business logic reliably before implementation.
+**I want** a Rust-focused monorepo with basic tooling,  
+**So that** I can build the core engine without complexity.
 
-**📋 DEPENDENCY:** Requires Stories 1.2 (IPC), 1.3 (Database), and 1.4 (Services) completion.
+### Acceptance Criteria (COMPLETED)
+1. ✅ Rust workspace structure created (crates/)
+2. ✅ Cargo workspace configured with shared dependencies
+3. ✅ Basic environment configuration (.env support)
+4. ✅ Simple CI/CD pipeline (Rust only)
+5. ✅ Git repository with proper .gitignore
+6. ✅ Development scripts (cargo build, test, clippy)
+7. ✅ README.md with setup instructions
+8. ✅ Rust toolchain installed and working
 
-### Acceptance Criteria
-
-**Rust Testing Stack:**
-1: `cargo test` configuration with workspace support
-2: Criterion benchmarking for performance-critical paths
-3: Mock data generators for financial scenarios
-4: Property-based testing setup for numerical accuracy
-
-**Python Testing Stack:**
-1: pytest configuration with PyO3 integration testing
-2: Financial accuracy validation framework
-3: NumPy/Pandas test data generation utilities
-4: Algorithm correctness verification framework
-
-**TypeScript Testing Stack:**
-1: Jest configuration with Electron context support
-2: React Testing Library for UI components
-3: Mock IPC communication utilities for isolated testing
-4: Component integration testing capabilities
-
-**Integration Testing Framework:**
-1: Cross-language test harness for IPC testing
-2: Database integration test helpers
-3: Service integration testing utilities
-4: End-to-end workflow validation framework
-
-**Performance Testing Foundation:**
-1: Benchmark baseline establishment across all components
-2: Memory leak detection setup
-3: Latency measurement framework
-4: Performance regression detection
-
-## Story 1.7: CI/CD Testing Integration (NEW)
-
-**As a** developer,  
-**I want** automated testing integrated into the CI/CD pipeline,  
-**so that** code quality is maintained and regressions are caught early.
-
-**📋 DEPENDENCY:** Requires Story 1.6 (Testing Framework) completion.
-
-### Acceptance Criteria
-1: Unit test execution across all stacks in CI pipeline
-2: Integration test runner with IPC protocol testing
-3: Performance benchmark integration with threshold enforcement
-4: Test result aggregation and reporting
-5: Quality gate enforcement (minimum coverage, performance thresholds)
-6: **NEW**: Environment-specific test configuration (CI vs local)
-7: **NEW**: Test database setup and teardown automation
-8: **NEW**: Parallel test execution optimization
-9: **NEW**: Test artifact collection and reporting
-
-## Story 1.8: Secure Credential Foundation (NEW)
-
-**As a** system architect,  
-**I want** secure credential management established,  
-**so that** external service integration can be implemented safely in future epics.
-
-**📋 DEPENDENCY:** Requires Story 1.1 (Infrastructure) completion.
-
-### Acceptance Criteria
-1: Windows Credential Manager integration for production API keys
-2: Environment-specific credential loading (.env files for development)
-3: Credential validation and error handling
-4: Secure defaults ensuring no hardcoded secrets
-5: Audit trail for credential access
-6: **NEW**: Credential rotation support framework
-7: **NEW**: Credential health monitoring
-8: Documentation for credential management process
-9: **NEW**: Integration with configuration management system
-
-## Story 1.9: Basic MTF State Framework (Enhanced)
-
-**As a** developer,  
-**I want** the foundational MTF state management structure,  
-**so that** Epic 2 can build the complete synchronization engine with proper testing and monitoring.
-
-**📋 DEPENDENCY:** Requires Stories 1.4 (Services), 1.5 (Data Pipeline), and 1.6 (Testing) completion.
-
-### Acceptance Criteria
-1: MTFState struct created with HashMap for different timeframes
-2: PartialBar and CompletedBar data structures defined
-3: Basic tick-to-timeframe routing logic implemented
-4: Memory-efficient ring buffers for historical bars per timeframe
-5: **NEW**: MTF state exposed through service layer architecture
-6: **NEW**: Comprehensive unit tests with financial accuracy validation
-7: Performance benchmark showing <100μs tick processing
-8: **NEW**: MTF state monitoring and health checks
-9: Debug output showing state changes for verification
-10: **NEW**: Integration tests validating MTF accuracy across timeframes
-11: Foundation ready for Epic 2's complete implementation
+**Status:** Merged to develop (commit f5d28a6)
 
 ---
 
-## 🔄 Dependency Validation Matrix
+## Story 1.2: Basic SQLite Integration 📝 NEXT
 
-| Story | Depends On | Enables | Blocks If Missing |
-|-------|-----------|---------|------------------|
-| 1.1 | None | All subsequent stories | All development |
-| 1.2 | 1.1 | Service communication | All service development |
-| 1.3 | 1.1, 1.2 | Data operations | Data-dependent features |
-| 1.4 | 1.2, 1.3 | Service architecture | Business logic services |
-| 1.5 | 1.3, 1.4 | Data pipeline | Data analysis capabilities |
-| 1.6 | 1.2, 1.3, 1.4 | Quality assurance | Reliable testing |
-| 1.7 | 1.6 | Automated QA | Deployment confidence |
-| 1.8 | 1.1 | External integration | Production deployment |
-| 1.9 | 1.4, 1.5, 1.6 | MTF processing | Epic 2 development |
+**As a** developer,  
+**I want** basic SQLite embedded database integration,  
+**So that** I can store and query tick data locally.
 
-## ⚡ Implementation Timeline
+### Acceptance Criteria
+1. [ ] Resolve SQLite arrow-arith compatibility issue
+2. [ ] Add SQLite dependency to workspace
+3. [ ] Create simple tick table schema (symbol, timestamp, bid, ask)
+4. [ ] Implement basic CRUD operations
+5. [ ] Support in-memory and file-based databases
+6. [ ] Add unit and integration tests
 
-**Week 1-2: Foundation Phase**
-- Story 1.1: Project Infrastructure Setup
-- Story 1.2: IPC Architecture Foundation
+### Technical Details
+- Use `sqlite = { version = "0.9", features = ["bundled"] }`
+- Simple schema only - no partitioning or optimization
+- Basic connection management - no pooling needed yet
 
-**Week 3-4: Data & Service Phase**
-- Story 1.3: DuckDB Integration
-- Story 1.4: Core Service Layer
+**Dependencies:** Story 1.1  
+**Branch:** `story/STORY-1.2-basic-sqlite-integration`
 
-**Week 5-6: Pipeline & Testing Phase**
-- Story 1.5: Data Import Pipeline
-- Story 1.6: Testing Framework
+---
 
-**Week 7-8: Integration & Security Phase**
-- Story 1.7: CI/CD Integration
-- Story 1.8: Credential Management
+## Story 1.3: Simple CSV Tick Import 📝 PLANNED
 
-**Week 9-10: Business Logic Foundation**
-- Story 1.9: MTF Framework
-- Epic 1 completion validation
+**As a** developer,  
+**I want** basic CSV import functionality,  
+**So that** I can load historical tick data.
 
-## ✅ Epic Completion Criteria
+### Acceptance Criteria
+1. [ ] Parse standard CSV format (symbol, timestamp, bid, ask)
+2. [ ] Validate required fields present
+3. [ ] Batch insert into SQLite (1000 rows/batch)
+4. [ ] Handle invalid rows with error logging
+5. [ ] Return import summary (processed, errors, inserted)
+6. [ ] Create sample test data files
 
-**Technical Validation:**
-1. All IPC communication patterns working end-to-end
-2. Full test suite passing across all technology stacks
-3. CI/CD pipeline successfully building and testing
-4. Environment configuration validated in all target environments
-5. Credential management working with test credentials
+### Technical Details
+- Support CSV files up to 100MB
+- Basic validation only
+- No progress reporting or streaming
 
-**Process Validation:**
-1. No blocking dependencies discovered during Epic 2 development
-2. Development velocity maintained throughout Epic 1
-3. Quality metrics meeting established thresholds
-4. Documentation complete and validated by team
+**Dependencies:** Story 1.2  
+**Branch:** `story/STORY-1.3-simple-csv-import`
 
-**Risk Mitigation:**
-1. Infrastructure debt minimized through proper sequencing
-2. No architectural rework required in subsequent epics
-3. Development team velocity maintaining or improving
+---
+
+## Story 1.4: Basic CLI Query Interface 📝 PLANNED
+
+**As a** user,  
+**I want** a simple command-line interface,  
+**So that** I can import and query tick data.
+
+### Acceptance Criteria
+1. [ ] Create `backtestr` CLI binary
+2. [ ] Implement `import` command for CSV files
+3. [ ] Implement `query` command with symbol/date filters
+4. [ ] Implement `stats` command for database overview
+5. [ ] Implement `delete` command for data cleanup
+6. [ ] Add table, CSV, and JSON output formats
+
+### Commands
+```bash
+backtestr import --file data.csv
+backtestr query --symbol EURUSD --from 2024-01-01 --to 2024-01-02
+backtestr stats
+backtestr delete --symbol EURUSD --confirm
+```
+
+**Dependencies:** Story 1.3  
+**Branch:** `story/STORY-1.4-basic-cli-queries`
+
+---
+
+## Story 1.5: Basic Performance Validation 📝 PLANNED
+
+**As a** developer,  
+**I want** to validate basic performance targets,  
+**So that** I know the foundation is solid.
+
+### Acceptance Criteria
+1. [ ] Create Criterion benchmark suite
+2. [ ] Validate tick insertion: ≥10K ticks/second
+3. [ ] Validate memory usage: <500MB for 1M ticks
+4. [ ] Validate query response: <100ms for basic queries
+5. [ ] Document performance baseline
+6. [ ] Identify optimization opportunities for Epic 2
+
+### Technical Details
+- Use Criterion.rs for benchmarking
+- Basic profiling only
+- Document but don't optimize unless targets missed
+
+**Dependencies:** Story 1.4  
+**Branch:** `story/STORY-1.5-performance-validation`
+
+---
+
+## Epic Completion Criteria
+
+### Must Have
+- [x] Rust workspace building and tested
+- [ ] SQLite storing and querying ticks
+- [ ] CSV import working
+- [ ] CLI providing basic access
+- [ ] Performance targets met
+
+### Nice to Have (But Not Required)
+- [ ] Better error messages
+- [ ] More CSV formats
+- [ ] Additional CLI commands
+
+### Explicitly Excluded
+- No Python code
+- No JavaScript/TypeScript
+- No IPC/messaging
+- No complex schemas
+- No optimization beyond basics
+- No real-time data
+- No MTF processing
+- No service architecture
+
+## Performance Targets
+
+| Metric | Target | Priority |
+|--------|--------|----------|
+| Tick insertion | ≥10K/second | Required |
+| Memory (1M ticks) | <500MB | Required |
+| Query response | <100ms | Required |
+| CSV import | >10K rows/second | Nice to have |
+
+## Risk Mitigation
+
+### Known Issues
+1. **SQLite compatibility** - Arrow-arith version conflict needs resolution
+2. **Scope creep** - Strong temptation to add "just one more feature"
+3. **Documentation drift** - Multiple docs with conflicting information
+
+### Mitigation Strategy
+1. Fix SQLite issue before starting Story 1.2
+2. Strict adherence to acceptance criteria
+3. CLAUDE.md as single source of truth
+
+## Success Metrics
+
+### Epic Success
+- [ ] All 5 stories complete
+- [ ] Performance targets met
+- [ ] Zero dependencies on future epics
+- [ ] Clean, maintainable codebase
+- [ ] Clear path to Epic 2
+
+### Warning Signs
+- Adding Python "just for testing"
+- Creating IPC "for future use"
+- Complex optimization attempts
+- Feature additions beyond scope
+
+## Notes for Developers
+
+### Do's
+- Keep it simple
+- Focus on correctness
+- Test thoroughly
+- Document clearly
+- Ask when unsure
+
+### Don'ts
+- Don't add Python
+- Don't add frontend code
+- Don't over-engineer
+- Don't optimize prematurely
+- Don't add unused features
+
+## Related Documentation
+- [CLAUDE.md](../../CLAUDE.md) - Progressive development guidelines
+- [Feature Preservation Matrix](../development/feature-preservation-matrix.md) - Where features moved
+- [Progressive Development Audit](../development/progressive-development-audit.md) - Why we restructured
+- Individual story files in `docs/stories/epic-1/`
+
+---
+
+**Epic Status:** IN PROGRESS  
+**Current Story:** 1.2 - Basic SQLite Integration  
+**Last Updated:** Current Session  
+**Epic Owner:** Development Team

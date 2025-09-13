@@ -12,8 +12,7 @@ anyhow = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tracing = { workspace = true }
-# TODO: Re-enable for Epic 2 - currently has arrow-arith compatibility issue
-# duckdb = { workspace = true }
+rusqlite = { workspace = true }
 
 # Data-specific dependencies
 arrow = "56.1"
@@ -24,3 +23,8 @@ uuid = { version = "1.6", features = ["v4", "serde"] }
 [dev-dependencies]
 tempfile = "3.8"
 proptest = { workspace = true }
+criterion = { workspace = true }
+
+[[bench]]
+name = "tick_operations"
+harness = false
