@@ -121,19 +121,21 @@ backtestr delete --symbol EURUSD --confirm
 
 ---
 
-## Story 1.5: Basic Performance Validation 📝 NEXT
+## Story 1.5: Basic Performance Validation ✅ COMPLETE
 
 **As a** developer,  
 **I want** to validate basic performance targets,  
 **So that** I know the foundation is solid.
 
-### Acceptance Criteria
-1. [ ] Create Criterion benchmark suite
-2. [ ] Validate tick insertion: ≥10K ticks/second
-3. [ ] Validate memory usage: <500MB for 1M ticks
-4. [ ] Validate query response: <100ms for basic queries
-5. [ ] Document performance baseline
-6. [ ] Identify optimization opportunities for Epic 2
+### Acceptance Criteria (COMPLETED)
+1. ✅ Created Criterion benchmark suite
+2. ✅ Validated tick insertion: ≥10K ticks/second
+3. ✅ Validated memory usage: <500MB for 1M ticks
+4. ✅ Validated query response: <100ms for basic queries
+5. ✅ Documented performance baseline
+6. ✅ Identified optimization opportunities for Epic 2
+
+**Status:** Merged to develop
 
 ### Technical Details
 - Use Criterion.rs for benchmarking
@@ -145,6 +147,32 @@ backtestr delete --symbol EURUSD --confirm
 
 ---
 
+## Story 1.6: Epic 1 Polish & Documentation 📝 NEW
+
+**As a** developer/user,
+**I want** comprehensive documentation and polish,
+**So that** Epic 1 is production-ready and well-documented.
+
+### Acceptance Criteria
+1. [ ] Update README.md with complete setup and usage instructions
+2. [ ] Document API with rustdoc comments
+3. [ ] Create performance benchmarking report
+4. [ ] Add example CSV files and usage scripts
+5. [ ] Write Epic 1 retrospective and lessons learned
+6. [ ] Clean up any TODO comments or temporary code
+7. [ ] Ensure all tests have proper documentation
+8. [ ] Create user guide for CLI commands
+
+### Technical Details
+- Focus on documentation and polish only
+- No new features or major refactoring
+- Prepare codebase for Epic 2 development
+
+**Dependencies:** Story 1.5
+**Branch:** `story/STORY-1.6-documentation-polish`
+
+---
+
 ## Epic Completion Criteria
 
 ### Must Have
@@ -152,7 +180,9 @@ backtestr delete --symbol EURUSD --confirm
 - [x] SQLite storing and querying ticks
 - [x] CSV import working
 - [x] CLI providing basic access
-- [ ] Performance targets met
+- [x] Performance targets met
+
+**EPIC 1 STATUS: ✅ COMPLETE**
 
 ### Nice to Have (But Not Required)
 - [ ] Better error messages
