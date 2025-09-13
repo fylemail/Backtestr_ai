@@ -18,7 +18,7 @@ jobs:
   # Single job for Epic 1 - Rust only
   epic-1-validation:
     name: Epic 1 - Core Validation
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
@@ -37,8 +37,9 @@ jobs:
           ~/.cargo/registry/cache/
           ~/.cargo/git/db/
           target/
-        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        key: ${{ runner.os }}-cargo-duckdb-${{ hashFiles('**/Cargo.lock') }}-${{ hashFiles('**/Cargo.toml') }}
         restore-keys: |
+          ${{ runner.os }}-cargo-duckdb-
           ${{ runner.os }}-cargo-
     
     - name: Format Check
