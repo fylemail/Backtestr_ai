@@ -1,7 +1,7 @@
-# Story 1.2: Basic DuckDB Integration
+# Story 1.2: Basic SQLite Integration
 
 ## Overview
-Integrate DuckDB as the embedded analytical database for tick data storage, implementing only the minimal functionality needed for Epic 1's foundation.
+Integrate SQLite as the embedded database for tick data storage, implementing only the minimal functionality needed for Epic 1's foundation.
 
 ## Story Details
 - **Epic**: 1 - Foundation & Core Data Pipeline
@@ -11,29 +11,29 @@ Integrate DuckDB as the embedded analytical database for tick data storage, impl
 - **Dependencies**: Story 1.1 (Infrastructure Setup)
 
 ## Progressive Development Context
-This story implements ONLY basic DuckDB integration necessary for Epic 1. Advanced features like optimization, complex schemas, and Parquet support are intentionally deferred to Epic 2.
+This story implements ONLY basic SQLite integration necessary for Epic 1. Advanced features like optimization, partitioning, and migration to analytical databases are intentionally deferred to Epic 2.
 
 ## Acceptance Criteria
 
-### 1. DuckDB Dependency Resolution
-- [x] Resolve arrow-arith compatibility issue in Cargo.toml
-- [x] Successfully add duckdb crate to workspace dependencies
+### 1. SQLite Dependency Resolution
+- [x] Add rusqlite crate to workspace dependencies
+- [x] Configure bundled feature for consistent builds
 - [x] Ensure all crates build without conflicts
 
 ### 2. Basic Database Setup
 - [x] Create database initialization in backtestr-data crate
 - [x] Implement simple in-memory database option
-- [x] Implement file-based database option (single .duckdb file)
+- [x] Implement file-based database option (single .db file)
 - [x] Add basic connection pooling (single connection is fine)
 
 ### 3. Simple Tick Data Schema
 ```sql
 -- Minimal schema for Epic 1
 CREATE TABLE IF NOT EXISTS ticks (
-    symbol VARCHAR NOT NULL,
-    timestamp TIMESTAMP NOT NULL,
-    bid DOUBLE PRECISION NOT NULL,
-    ask DOUBLE PRECISION NOT NULL,
+    symbol TEXT NOT NULL,
+    timestamp TEXT NOT NULL,  -- RFC3339 format
+    bid REAL NOT NULL,
+    ask REAL NOT NULL,
     bid_size INTEGER,
     ask_size INTEGER,
     PRIMARY KEY (symbol, timestamp)
@@ -52,8 +52,8 @@ ON ticks(timestamp);
 - [x] Delete ticks by symbol or time range
 
 ### 5. Error Handling
-- [x] Define DuckDBError type
-- [x] Wrap DuckDB errors appropriately
+- [x] Define SQLiteError type
+- [x] Wrap SQLite errors appropriately
 - [ ] Add basic retry logic for transient failures
 
 ## Non-Goals (Deferred to Later Epics)
@@ -78,7 +78,7 @@ ON ticks(timestamp);
 ```toml
 # In workspace Cargo.toml
 [workspace.dependencies]
-duckdb = { version = "0.9", features = ["bundled"] }
+sqlite = { version = "0.9", features = ["bundled"] }
 ```
 
 ### 2. Module Structure
@@ -142,7 +142,7 @@ impl Database {
 
 ## Notes
 - Keep implementation minimal - resist temptation to add "nice to have" features
-- Use DuckDB's bundled feature to avoid system dependencies
+- Use SQLite's bundled feature to avoid system dependencies
 - Focus on correctness over optimization (optimization comes in Epic 2)
 - If performance targets aren't met with basic implementation, document for Epic 2
 
@@ -151,9 +151,9 @@ impl Database {
 
 ## Start Checklist
 - [ ] Story 1.1 complete and merged
-- [ ] DuckDB compatibility issue understood
+- [ ] SQLite compatibility issue understood
 - [ ] Development environment ready
-- [ ] Create story branch: `story/STORY-1.2-basic-duckdb-integration`
+- [ ] Create story branch: `story/STORY-1.2-basic-sqlite-integration`
 
 ## Completion Checklist
 - [ ] All tests passing
@@ -178,10 +178,10 @@ impl Database {
 - `crates/backtestr-data/src/database/operations.rs` - CRUD operations
 - `crates/backtestr-data/tests/integration_test.rs` - Integration tests
 - `crates/backtestr-data/benches/tick_operations.rs` - Performance benchmarks
-- `Cargo.toml` - Updated DuckDB dependency
+- `Cargo.toml` - Updated SQLite dependency
 
 ### Completion Notes
-- Resolved DuckDB dependency issue by upgrading to v1.3
+- Resolved SQLite dependency issue by upgrading to v1.3
 - Implemented basic database with in-memory and file options
 - Created simple tick schema as specified
 - All CRUD operations implemented
@@ -191,9 +191,9 @@ impl Database {
 - Deferred retry logic for transient failures (not critical for Epic 1)
 
 ### Debug Log
-- Initial arrow-arith compatibility resolved with DuckDB 1.3
+- Initial arrow-arith compatibility resolved with SQLite 1.3
 - Transaction API issue fixed by using prepared statements for batch insert
-- DuckDB compilation is slow but functional
+- SQLite compilation is slow but functional
 
 ---
 
@@ -206,7 +206,7 @@ impl Database {
 
 ### Requirements Traceability
 ✅ **All 5 acceptance criteria groups validated:**
-1. DuckDB Dependency Resolution - COMPLETE
+1. SQLite Dependency Resolution - COMPLETE
 2. Basic Database Setup - COMPLETE  
 3. Simple Tick Data Schema - IMPLEMENTED
 4. Basic CRUD Operations - COMPLETE
@@ -230,7 +230,7 @@ impl Database {
 - Insert 10K ticks/second target
 - <500MB for 1M ticks target  
 - <100ms query response target
-⚠️ **Actual metrics**: Not validated due to DuckDB compilation time
+⚠️ **Actual metrics**: Not validated due to SQLite compilation time
 
 ### Risk Assessment
 **LOW RISK** - Foundation implementation with minimal complexity
@@ -238,7 +238,7 @@ impl Database {
 **Identified Risks:**
 1. **MINOR**: Retry logic deferred (acceptable for Epic 1)
 2. **MINOR**: Transaction support removed for batch inserts (uses prepared statements)
-3. **INFO**: DuckDB compilation is slow but functional
+3. **INFO**: SQLite compilation is slow but functional
 
 ### Progressive Development Compliance
 ✅ **Excellent adherence to Epic 1 boundaries:**

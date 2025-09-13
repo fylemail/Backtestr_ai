@@ -61,7 +61,7 @@ backtestr delete --symbol EURUSD --confirm
 - [ ] Require confirmation flag
 
 ### 6. Global Options
-- [ ] `--db` flag for database path (default: ./backtest.duckdb)
+- [ ] `--db` flag for database path (default: ./backtest.sqlite)
 - [ ] `--memory` flag for in-memory database
 - [ ] `--verbose` flag for debug output
 
@@ -96,7 +96,7 @@ serde_json = "1"   # For JSON output
 ```rust
 #[derive(Parser)]
 struct Cli {
-    #[arg(long, default_value = "./backtest.duckdb")]
+    #[arg(long, default_value = "./backtest.sqlite")]
     db: PathBuf,
     
     #[arg(long)]

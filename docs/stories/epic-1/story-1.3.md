@@ -8,7 +8,7 @@ Implement basic CSV file import for tick data, focusing on simplicity and correc
 - **Type**: Feature
 - **Priority**: P0 (Critical Path)
 - **Size**: S (2-3 days)
-- **Dependencies**: Story 1.2 (Basic DuckDB Integration)
+- **Dependencies**: Story 1.2 (Basic SQLite Integration)
 
 ## Progressive Development Context
 This story implements ONLY basic CSV parsing and import. Advanced features like binary formats, real-time feeds, and progress reporting are deferred to Epic 2.
@@ -38,7 +38,7 @@ This story implements ONLY basic CSV parsing and import. Advanced features like 
 - [ ] Skip invalid rows with error logging
 
 ### 4. Database Import
-- [ ] Batch insert into DuckDB (1000 rows per batch)
+- [ ] Batch insert into SQLite (1000 rows per batch)
 - [ ] Handle duplicate timestamps (skip or update)
 - [ ] Basic transaction support (all-or-nothing per file)
 
@@ -134,7 +134,7 @@ pub struct ImportSummary {
 
 ## Start Checklist
 - [ ] Story 1.2 complete and merged
-- [ ] DuckDB integration working
+- [ ] SQLite integration working
 - [ ] Test data prepared
 - [ ] Create story branch: `story/STORY-1.3-simple-csv-import`
 

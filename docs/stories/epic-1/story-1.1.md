@@ -110,7 +110,7 @@ backtestr_ai/
 ├── src/                      # Main Rust application source
 ├── crates/                   # Rust workspace crates
 │   ├── backtestr-core/       # Core engine
-│   ├── backtestr-data/       # DuckDB integration  
+│   ├── backtestr-data/       # SQLite integration  
 │   └── backtestr-ipc/        # Inter-process communication
 ├── electron/                 # Electron application
 │   ├── main.js               # Electron main process
@@ -316,7 +316,7 @@ Claude Opus 4.1 (claude-opus-4-1-20250805)
 - Comprehensive CI/CD pipeline with Windows x64 and ARM64 support
 - All development scripts created for both Windows (.bat) and Unix (.sh)
 
-**Build Verification**: Cargo build succeeds with all dependencies resolving correctly, including critical components (DuckDB, PyO3, Tokio).
+**Build Verification**: Cargo build succeeds with all dependencies resolving correctly, including critical components (SQLite, PyO3, Tokio).
 
 ### Refactoring Performed
 
@@ -340,7 +340,7 @@ Post-implementation verification complete:
 - [x] Credential management foundation implemented
 - [x] Environment configuration system with dotenv working
 - [x] Cross-platform scripts (Windows/Unix) created
-- [ ] DuckDB performance benchmarks pending (to be tested with real data)
+- [ ] SQLite performance benchmarks pending (to be tested with real data)
 - [ ] PyO3 Python integration to be validated in Epic 4
 
 ### Security Review

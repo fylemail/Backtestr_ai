@@ -8,7 +8,7 @@
 
 ### What We're Building
 - ✅ Rust workspace structure
-- ✅ Basic DuckDB integration  
+- ✅ Basic SQLite integration  
 - ✅ Simple CSV import
 - ✅ Basic CLI for queries
 - ✅ Performance validation
@@ -44,27 +44,27 @@
 
 ---
 
-## Story 1.2: Basic DuckDB Integration 📝 NEXT
+## Story 1.2: Basic SQLite Integration 📝 NEXT
 
 **As a** developer,  
-**I want** basic DuckDB embedded database integration,  
+**I want** basic SQLite embedded database integration,  
 **So that** I can store and query tick data locally.
 
 ### Acceptance Criteria
-1. [ ] Resolve DuckDB arrow-arith compatibility issue
-2. [ ] Add DuckDB dependency to workspace
+1. [ ] Resolve SQLite arrow-arith compatibility issue
+2. [ ] Add SQLite dependency to workspace
 3. [ ] Create simple tick table schema (symbol, timestamp, bid, ask)
 4. [ ] Implement basic CRUD operations
 5. [ ] Support in-memory and file-based databases
 6. [ ] Add unit and integration tests
 
 ### Technical Details
-- Use `duckdb = { version = "0.9", features = ["bundled"] }`
+- Use `sqlite = { version = "0.9", features = ["bundled"] }`
 - Simple schema only - no partitioning or optimization
 - Basic connection management - no pooling needed yet
 
 **Dependencies:** Story 1.1  
-**Branch:** `story/STORY-1.2-basic-duckdb-integration`
+**Branch:** `story/STORY-1.2-basic-sqlite-integration`
 
 ---
 
@@ -77,7 +77,7 @@
 ### Acceptance Criteria
 1. [ ] Parse standard CSV format (symbol, timestamp, bid, ask)
 2. [ ] Validate required fields present
-3. [ ] Batch insert into DuckDB (1000 rows/batch)
+3. [ ] Batch insert into SQLite (1000 rows/batch)
 4. [ ] Handle invalid rows with error logging
 5. [ ] Return import summary (processed, errors, inserted)
 6. [ ] Create sample test data files
@@ -147,7 +147,7 @@ backtestr delete --symbol EURUSD --confirm
 
 ### Must Have
 - [x] Rust workspace building and tested
-- [ ] DuckDB storing and querying ticks
+- [ ] SQLite storing and querying ticks
 - [ ] CSV import working
 - [ ] CLI providing basic access
 - [ ] Performance targets met
@@ -179,12 +179,12 @@ backtestr delete --symbol EURUSD --confirm
 ## Risk Mitigation
 
 ### Known Issues
-1. **DuckDB compatibility** - Arrow-arith version conflict needs resolution
+1. **SQLite compatibility** - Arrow-arith version conflict needs resolution
 2. **Scope creep** - Strong temptation to add "just one more feature"
 3. **Documentation drift** - Multiple docs with conflicting information
 
 ### Mitigation Strategy
-1. Fix DuckDB issue before starting Story 1.2
+1. Fix SQLite issue before starting Story 1.2
 2. Strict adherence to acceptance criteria
 3. CLAUDE.md as single source of truth
 
@@ -228,6 +228,6 @@ backtestr delete --symbol EURUSD --confirm
 ---
 
 **Epic Status:** IN PROGRESS  
-**Current Story:** 1.2 - Basic DuckDB Integration  
+**Current Story:** 1.2 - Basic SQLite Integration  
 **Last Updated:** Current Session  
 **Epic Owner:** Development Team

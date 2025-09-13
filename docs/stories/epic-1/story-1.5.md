@@ -181,7 +181,7 @@ fn test_memory_usage() {
 Only implement if targets aren't met:
 - [ ] Increase batch sizes
 - [ ] Add simple prepared statements
-- [ ] Tune DuckDB buffer size
+- [ ] Tune SQLite buffer size
 - [ ] Pre-allocate collections
 
 ## Definition of Done
