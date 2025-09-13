@@ -58,7 +58,7 @@ impl Database {
         start: DateTime<Utc>,
         end: DateTime<Utc>,
     ) -> Result<Vec<Tick>> {
-        let sql = "SELECT symbol, timestamp, bid, ask, bid_size, ask_size 
+        let sql = "SELECT symbol, timestamp::VARCHAR, bid, ask, bid_size, ask_size 
                    FROM ticks 
                    WHERE symbol = ? AND timestamp >= ? AND timestamp <= ?
                    ORDER BY timestamp";
