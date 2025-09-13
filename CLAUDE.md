@@ -3,7 +3,7 @@
 ## Current Development Focus
 
 **Active Epic**: Epic 1 - Foundation & Core Data Pipeline  
-**Current Story**: 1.1 Complete, 1.2 Starting  
+**Current Story**: 1.4 Complete, 1.5 Next  
 **Development Philosophy**: Build ONLY what current epic needs
 
 ## Critical Boundaries - DO NOT BUILD YET
@@ -30,6 +30,10 @@ cargo build              # Build Rust workspace
 cargo test              # Run tests
 cargo clippy            # Lint code
 cargo fmt               # Format code
+cargo run --bin backtestr -- --help  # CLI help
+cargo run --bin backtestr -- import <csv_file>  # Import CSV data
+cargo run --bin backtestr -- query --symbol EURUSD  # Query tick data
+cargo run --bin backtestr -- stats  # Show database statistics
 
 # These DON'T work yet (don't try):
 # npm/pnpm commands     # No frontend yet
@@ -119,10 +123,10 @@ git checkout -b story/STORY-1.2-basic-sqlite
 
 ## Epic 1 Completion Checklist
 
-- [ ] Story 1.1: Project setup ✅
-- [ ] Story 1.2: Basic SQLite integration
-- [ ] Story 1.3: CSV tick data ingestion
-- [ ] Story 1.4: Simple query interface
+- [x] Story 1.1: Project setup ✅
+- [x] Story 1.2: Basic SQLite integration ✅
+- [x] Story 1.3: CSV tick data ingestion ✅
+- [x] Story 1.4: Simple query interface ✅
 - [ ] Story 1.5: Basic performance optimization
 
 ## Questions to Ask Yourself

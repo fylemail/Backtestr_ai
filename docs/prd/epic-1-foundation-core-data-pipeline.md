@@ -98,13 +98,15 @@
 **I want** a simple command-line interface,  
 **So that** I can import and query tick data.
 
-### Acceptance Criteria
-1. [ ] Create `backtestr` CLI binary
-2. [ ] Implement `import` command for CSV files
-3. [ ] Implement `query` command with symbol/date filters
-4. [ ] Implement `stats` command for database overview
-5. [ ] Implement `delete` command for data cleanup
-6. [ ] Add table, CSV, and JSON output formats
+### Acceptance Criteria (COMPLETED)
+1. ✅ Created `backtestr` CLI binary
+2. ✅ Implemented `import` command for CSV files
+3. ✅ Implemented `query` command with symbol/date filters
+4. ✅ Implemented `stats` command for database overview
+5. ✅ Implemented `delete` command for data cleanup
+6. ✅ Added table and JSON output formats
+
+**Status:** Merged to develop (commit 278568e)
 
 ### Commands
 ```bash
@@ -119,7 +121,7 @@ backtestr delete --symbol EURUSD --confirm
 
 ---
 
-## Story 1.5: Basic Performance Validation 📝 PLANNED
+## Story 1.5: Basic Performance Validation 📝 NEXT
 
 **As a** developer,  
 **I want** to validate basic performance targets,  
@@ -147,9 +149,9 @@ backtestr delete --symbol EURUSD --confirm
 
 ### Must Have
 - [x] Rust workspace building and tested
-- [ ] SQLite storing and querying ticks
-- [ ] CSV import working
-- [ ] CLI providing basic access
+- [x] SQLite storing and querying ticks
+- [x] CSV import working
+- [x] CLI providing basic access
 - [ ] Performance targets met
 
 ### Nice to Have (But Not Required)
