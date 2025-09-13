@@ -2,8 +2,8 @@ use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub enum DatabaseError {
-    #[error("DuckDB error: {0}")]
-    DuckDB(#[from] duckdb::Error),
+    #[error("SQLite error: {0}")]
+    SQLite(#[from] rusqlite::Error),
 
     #[error("Failed to initialize database: {0}")]
     InitializationError(String),

@@ -2,7 +2,7 @@ use super::connection::Database;
 use super::error::{DatabaseError, Result};
 use crate::models::Tick;
 use chrono::{DateTime, Utc};
-use duckdb::params;
+use rusqlite::params;
 
 impl Database {
     pub fn insert_tick(&self, tick: &Tick) -> Result<()> {
@@ -27,8 +27,7 @@ impl Database {
     }
 
     pub fn insert_ticks(&self, ticks: &[Tick]) -> Result<()> {
-        // DuckDB doesn't support transactions from shared reference,
-        // so we'll use prepared statements for batch insert
+        // Use prepared statements for batch insert
         let sql = "INSERT INTO ticks (symbol, timestamp, bid, ask, bid_size, ask_size) 
                    VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -58,7 +57,7 @@ impl Database {
         start: DateTime<Utc>,
         end: DateTime<Utc>,
     ) -> Result<Vec<Tick>> {
-        let sql = "SELECT symbol, timestamp::VARCHAR, bid, ask, bid_size, ask_size 
+        let sql = "SELECT symbol, timestamp, bid, ask, bid_size, ask_size 
                    FROM ticks 
                    WHERE symbol = ? AND timestamp >= ? AND timestamp <= ?
                    ORDER BY timestamp";
@@ -75,9 +74,9 @@ impl Database {
                     let timestamp_str: String = row.get(1)?;
                     let timestamp = DateTime::parse_from_rfc3339(&timestamp_str)
                         .map_err(|e| {
-                            duckdb::Error::FromSqlConversionFailure(
+                            rusqlite::Error::FromSqlConversionFailure(
                                 1,
-                                duckdb::types::Type::Text,
+                                rusqlite::types::Type::Text,
                                 Box::new(e),
                             )
                         })?

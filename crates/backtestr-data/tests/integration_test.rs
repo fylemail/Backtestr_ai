@@ -56,7 +56,7 @@ fn test_full_lifecycle() -> Result<()> {
 #[test]
 fn test_file_persistence() -> Result<()> {
     let temp_dir = tempdir().unwrap();
-    let db_path = temp_dir.path().join("test.duckdb");
+    let db_path = temp_dir.path().join("test.db");
     let now = Utc::now();
 
     // Create and populate database
@@ -90,7 +90,7 @@ fn test_concurrent_access() -> Result<()> {
     use std::thread;
 
     let temp_dir = tempdir().unwrap();
-    let db_path = temp_dir.path().join("concurrent.duckdb");
+    let db_path = temp_dir.path().join("concurrent.db");
 
     // Create database
     let db = Database::new_file(&db_path)?;

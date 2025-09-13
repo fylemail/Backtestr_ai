@@ -46,8 +46,10 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
 # Database
-# Using bundled feature for consistent builds
-duckdb = { version = "1.3", features = ["bundled"] }
+# Using rusqlite for Epic 1 - simpler and faster CI
+# DuckDB will be added in Epic 2 for advanced analytics
+rusqlite = { version = "0.32", features = ["bundled", "chrono"] }
+# duckdb = { version = "1.3", features = ["bundled"] } # Epic 2
 
 # Epic 4: Python integration - not needed yet
 # pyo3 = { version = "0.20", features = ["extension-module", "abi3-py39"] }
