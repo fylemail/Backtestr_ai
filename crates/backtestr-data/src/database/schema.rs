@@ -1,5 +1,5 @@
-use duckdb::Connection;
 use super::error::Result;
+use duckdb::Connection;
 
 const TICK_TABLE_SCHEMA: &str = r#"
 CREATE TABLE IF NOT EXISTS ticks (
@@ -32,13 +32,13 @@ mod tests {
     fn test_schema_initialization() -> Result<()> {
         let conn = Connection::open_in_memory()?;
         initialize_schema(&conn)?;
-        
+
         let table_exists: bool = conn.query_row(
             "SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name = 'ticks'",
             [],
-            |row| row.get(0)
+            |row| row.get(0),
         )?;
-        
+
         assert!(table_exists);
         Ok(())
     }

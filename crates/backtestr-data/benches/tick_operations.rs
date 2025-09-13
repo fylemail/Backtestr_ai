@@ -19,7 +19,7 @@ fn generate_ticks(count: usize) -> Vec<Tick> {
 
 fn bench_insert_ticks(c: &mut Criterion) {
     let ticks_10k = generate_ticks(10_000);
-    
+
     c.bench_function("insert_10k_ticks", |b| {
         b.iter(|| {
             let db = Database::new_memory().unwrap();
@@ -32,16 +32,18 @@ fn bench_query_ticks(c: &mut Criterion) {
     let db = Database::new_memory().unwrap();
     let ticks = generate_ticks(10_000);
     db.insert_ticks(&ticks).unwrap();
-    
+
     let now = Utc::now();
-    
+
     c.bench_function("query_10k_ticks", |b| {
         b.iter(|| {
-            let result = db.query_ticks(
-                black_box("EURUSD"),
-                black_box(now),
-                black_box(now + Duration::seconds(10_000)),
-            ).unwrap();
+            let result = db
+                .query_ticks(
+                    black_box("EURUSD"),
+                    black_box(now),
+                    black_box(now + Duration::seconds(10_000)),
+                )
+                .unwrap();
             black_box(result);
         });
     });
@@ -53,7 +55,7 @@ fn bench_memory_usage(c: &mut Criterion) {
             let db = Database::new_memory().unwrap();
             let ticks = generate_ticks(100_000);
             db.insert_ticks(&ticks).unwrap();
-            
+
             // Verify we can query them
             let count = db.count_ticks().unwrap();
             assert_eq!(count, 100_000);
@@ -62,5 +64,10 @@ fn bench_memory_usage(c: &mut Criterion) {
     });
 }
 
-criterion_group!(benches, bench_insert_ticks, bench_query_ticks, bench_memory_usage);
+criterion_group!(
+    benches,
+    bench_insert_ticks,
+    bench_query_ticks,
+    bench_memory_usage
+);
 criterion_main!(benches);

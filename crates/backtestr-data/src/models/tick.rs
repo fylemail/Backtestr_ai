@@ -38,7 +38,7 @@ mod tests {
     fn test_tick_creation() {
         let timestamp = Utc::now();
         let tick = Tick::new("EURUSD".to_string(), timestamp, 1.0921, 1.0923);
-        
+
         assert_eq!(tick.symbol, "EURUSD");
         assert_eq!(tick.bid, 1.0921);
         assert_eq!(tick.ask, 1.0923);
@@ -49,9 +49,9 @@ mod tests {
     #[test]
     fn test_tick_with_sizes() {
         let timestamp = Utc::now();
-        let tick = Tick::new("EURUSD".to_string(), timestamp, 1.0921, 1.0923)
-            .with_sizes(1000000, 1000000);
-        
+        let tick =
+            Tick::new("EURUSD".to_string(), timestamp, 1.0921, 1.0923).with_sizes(1000000, 1000000);
+
         assert_eq!(tick.bid_size, Some(1000000));
         assert_eq!(tick.ask_size, Some(1000000));
     }
