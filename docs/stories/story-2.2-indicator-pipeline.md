@@ -2,7 +2,7 @@
 
 **Epic:** Epic 2 - Multi-Timeframe Synchronization Engine
 **Story ID:** STORY-2.2
-**Status:** Blocked by Story 2.1
+**Status:** Ready for Development
 **Branch:** `story/STORY-2.2-indicator-pipeline`
 
 ## Story Description
