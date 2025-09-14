@@ -2,26 +2,34 @@
 
 ## Current Development Focus
 
-**Active Epic**: Transitioning Epic 1 → Epic 2
-**Current Story**: Epic 2 Pre-Planning & Alignment
+**Active Epic**: Epic 2 - Multi-Timeframe Synchronization Engine
+**Current Story**: 2.0 - Data Model Foundation ✅ COMPLETE (Ready for merge)
+**Next Story**: 2.1 - MTF State Synchronization (Ready to start)
 **Development Philosophy**: Build ONLY what current epic needs
 **Note**: SQLite chosen over DuckDB in Epic 1 - maintaining this decision
 
 ## Critical Boundaries - DO NOT BUILD YET
 
-❌ **Python Integration** - Deferred to Epic 4  
-❌ **Frontend/Electron** - Deferred to Epic 5  
-❌ **Advanced Credentials** - Deferred to Epic 2  
-❌ **MTF State Engine** - Deferred to Epic 3  
-❌ **Charting/Visualization** - Deferred to Epic 6  
-❌ **Statistical Analysis** - Deferred to Epic 7  
+❌ **Python Integration** - Deferred to Epic 4
+❌ **Frontend/Electron** - Deferred to Epic 5
+❌ **Position Management** - Deferred to Epic 3
+❌ **Charting/Visualization** - Deferred to Epic 5
+❌ **Walkback Replay** - Deferred to Epic 6
+❌ **Statistical Analysis** - Deferred to Epic 7
 
-## What We're Building NOW (Epic 1)
+## What We Built in Epic 1 (COMPLETE)
 
-✅ **Rust Core Engine** - Basic tick processing  
-✅ **Simple SQLite** - Basic data storage (no optimization)  
-✅ **Tick Data Ingestion** - CSV/simple formats only  
-✅ **Basic CLI** - Simple command interface  
+✅ **Rust Core Engine** - Basic tick processing
+✅ **Simple SQLite** - Basic data storage
+✅ **Tick Data Ingestion** - CSV/simple formats
+✅ **Basic CLI** - Query interface
+
+## What We're Building NOW (Epic 2)
+
+✅ **Bar/Candle Data Model** - OHLCV structures (Story 2.0 COMPLETE)
+🚧 **MTF Synchronization** - Multi-timeframe state engine (Story 2.1 NEXT)
+🚧 **Indicator Pipeline** - 20 core indicators (Story 2.2)
+🚧 **State Persistence** - Checkpoint/recovery system (Story 2.4)  
 
 ## Current Working Commands
 
@@ -89,11 +97,12 @@ pub mod core_features;  // Always built
 ### Git Workflow
 
 ```bash
-# Branch naming for Epic 1
-git checkout -b story/STORY-1.2-basic-sqlite
+# Branch naming for Epic 2
+git checkout -b story/STORY-2.0-data-model-foundation
 
 # Don't create branches for future epics yet
-# ❌ story/STORY-5.1-frontend
+# ❌ story/STORY-3.1-position-management
+# ❌ story/STORY-4.1-python-bridge
 ```
 
 ## Common Mistakes to Avoid
@@ -104,11 +113,18 @@ git checkout -b story/STORY-1.2-basic-sqlite
 4. **Unused dependencies** - Only add what's needed NOW
 5. **Empty directories** - Don't create algorithms/, electron/ yet
 
-## Performance Targets (Epic 1 Only)
+## Performance Targets
 
-- Tick ingestion: 10K ticks/second minimum
-- Memory usage: < 500MB for 1M ticks
-- Query response: < 100ms for basic queries
+### Epic 1 (Achieved)
+- Tick ingestion: 10K ticks/second ✅
+- Memory usage: < 500MB for 1M ticks ✅
+- Query response: < 100ms for basic queries ✅
+
+### Epic 2 (Current Targets)
+- Tick processing: <100μs with all timeframes
+- Indicator updates: <50μs for all 20 indicators
+- State query: <10μs for snapshot
+- Recovery time: <1 second
 
 ## Testing Requirements
 
@@ -132,13 +148,14 @@ git checkout -b story/STORY-1.2-basic-sqlite
 
 **Epic 1 Status: COMPLETE** ✅
 
-## Epic 2 Story Planning (NEW)
+## Epic 2 Story Planning (IN PROGRESS)
 
-### Story 2.0: Data Model Foundation (NEW - Critical)
-- [ ] Bar/Candle data structures
-- [ ] Timeframe enumeration
-- [ ] Tick-to-bar aggregation
-- [ ] SQLite schema extension
+### Story 2.0: Data Model Foundation ✅ COMPLETE
+- [x] Bar/Candle data structures
+- [x] Timeframe enumeration
+- [x] Tick-to-bar aggregation
+- [x] SQLite schema extension
+**Status:** Ready for Review - QA PASSED
 
 ### Story 2.1: MTF State Synchronization
 - [ ] In-memory MTF engine
@@ -163,15 +180,17 @@ git checkout -b story/STORY-1.2-basic-sqlite
 ## Questions to Ask Yourself
 
 Before writing ANY code:
-1. Is this needed for Epic 1?
+1. Is this needed for Epic 2?
 2. Will this work without Python/Frontend?
 3. Can this be simpler?
 4. Am I over-engineering?
+5. Does this maintain zero look-ahead bias?
 
 ## Getting Help
 
-- Review: `docs/development/progressive-development-audit.md`
-- Epic details: `docs/prd/epic-1-foundation-core-data-pipeline.md`
+- Epic 2 Stories: `docs/stories/story-2.*.md`
+- Configuration: `docs/stories/epic-2-configuration-schema.md`
+- Review Analysis: `docs/stories/epic-2-story-review.md`
 - Git strategy: `docs/development/git-strategy.md`
 
 ---
