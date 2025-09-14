@@ -8,8 +8,10 @@ pub mod engine;
 pub mod indicators;
 pub mod positions;
 pub mod python;
+pub mod timeframe;
 
 pub use engine::MTFEngine;
+pub use timeframe::Timeframe;
 
 #[cfg(test)]
 mod tests {
