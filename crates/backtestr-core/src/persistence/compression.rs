@@ -5,19 +5,17 @@ use anyhow::{Context, Result};
 pub fn compress_data(data: &[u8], level: i32) -> Result<Vec<u8>> {
     // ZSTD compression levels: 1-22 (default is 3)
     let compression_level = match level {
-        0 => 1,      // Minimum compression
-        1..=9 => level, // Map 1-9 directly
+        0 => 1,           // Minimum compression
+        1..=9 => level,   // Map 1-9 directly
         10..=22 => level, // ZSTD supports higher levels
-        _ => 3,      // Default ZSTD level
+        _ => 3,           // Default ZSTD level
     };
 
-    zstd::encode_all(data, compression_level)
-        .context("Failed to compress data with ZSTD")
+    zstd::encode_all(data, compression_level).context("Failed to compress data with ZSTD")
 }
 
 pub fn decompress_data(compressed: &[u8]) -> Result<Vec<u8>> {
-    zstd::decode_all(compressed)
-        .context("Failed to decompress data with ZSTD")
+    zstd::decode_all(compressed).context("Failed to decompress data with ZSTD")
 }
 
 pub fn estimate_compression_ratio(original_size: usize, compressed_size: usize) -> f64 {
