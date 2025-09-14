@@ -1,5 +1,5 @@
 use backtestr_data::timeframe::Timeframe;
-use chrono::{Datelike, DateTime, NaiveDate, NaiveDateTime, NaiveTime, Timelike, Weekday};
+use chrono::{DateTime, Datelike, NaiveDate, NaiveDateTime, NaiveTime, Timelike, Weekday};
 use chrono_tz::Tz;
 use std::collections::{HashMap, HashSet};
 
@@ -63,7 +63,7 @@ impl MarketHours {
         MarketHours {
             symbol: symbol.to_string(),
             timezone: chrono_tz::US::Central,
-            open_time: NaiveTime::from_hms_opt(17, 0, 0).unwrap(),  // Sunday 5pm CT
+            open_time: NaiveTime::from_hms_opt(17, 0, 0).unwrap(), // Sunday 5pm CT
             close_time: NaiveTime::from_hms_opt(16, 0, 0).unwrap(), // Friday 4pm CT
             trading_days: vec![
                 Weekday::Sun,
@@ -98,7 +98,8 @@ impl MarketHours {
         }
 
         // For 24-hour markets (forex), handle week boundaries
-        if self.symbol.contains("USD") || self.symbol.contains("EUR") || self.symbol.contains("GBP") {
+        if self.symbol.contains("USD") || self.symbol.contains("EUR") || self.symbol.contains("GBP")
+        {
             // Sunday: only after open_time
             if weekday == Weekday::Sun {
                 return time >= self.open_time;
@@ -262,7 +263,9 @@ impl SessionManager {
             current_date = current_date.succ_opt()?;
             let weekday = current_date.weekday();
 
-            if hours.trading_days.contains(&weekday) && !self.market_schedule.is_holiday(current_date) {
+            if hours.trading_days.contains(&weekday)
+                && !self.market_schedule.is_holiday(current_date)
+            {
                 let open_datetime = NaiveDateTime::new(current_date, hours.open_time);
                 return Some(open_datetime.and_utc().timestamp_millis());
             }
@@ -383,6 +386,9 @@ mod tests {
         let early_close_time = NaiveTime::from_hms_opt(13, 0, 0).unwrap();
 
         schedule.add_early_close(early_close_date, early_close_time);
-        assert_eq!(schedule.get_close_time(early_close_date), Some(early_close_time));
+        assert_eq!(
+            schedule.get_close_time(early_close_date),
+            Some(early_close_time)
+        );
     }
 }

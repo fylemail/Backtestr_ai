@@ -97,7 +97,8 @@ impl BarAggregator {
         let mut events_to_publish = Vec::new();
 
         // Find all timeframes that aggregate from this source
-        let target_timeframes: Vec<Timeframe> = self.aggregation_rules
+        let target_timeframes: Vec<Timeframe> = self
+            .aggregation_rules
             .iter()
             .filter(|(_, rule)| rule.source_timeframe == source_timeframe)
             .map(|(tf, _)| *tf)
@@ -105,7 +106,10 @@ impl BarAggregator {
 
         for target_tf in target_timeframes {
             // Add bar to pending bars for this timeframe
-            self.pending_bars.entry(target_tf).or_default().push(bar.clone());
+            self.pending_bars
+                .entry(target_tf)
+                .or_default()
+                .push(bar.clone());
 
             // Try to aggregate with current pending bars
             let pending = self.pending_bars.get(&target_tf).unwrap();
@@ -151,10 +155,10 @@ impl BarAggregator {
         if source_bars.len() < rule.bars_per_aggregation {
             // Check if we hit a session boundary
             if let Some(last_bar) = source_bars.last() {
-                if self.session_manager.is_session_boundary(
-                    target_timeframe,
-                    last_bar.timestamp_end,
-                ) {
+                if self
+                    .session_manager
+                    .is_session_boundary(target_timeframe, last_bar.timestamp_end)
+                {
                     return Some(self.create_session_bar(source_bars, target_timeframe));
                 }
             }
@@ -184,7 +188,10 @@ impl BarAggregator {
 
         // Check for session boundary
         if let Some(last_bar) = pending_bars.last() {
-            if self.session_manager.is_session_boundary(target_timeframe, last_bar.timestamp_end) {
+            if self
+                .session_manager
+                .is_session_boundary(target_timeframe, last_bar.timestamp_end)
+            {
                 return Some(self.create_session_bar(pending_bars, target_timeframe));
             }
         }
@@ -286,7 +293,11 @@ impl BarAggregator {
         bar
     }
 
-    fn handle_gap_aggregation(&self, source_bars: &[Bar], target_timeframe: Timeframe) -> Option<Bar> {
+    fn handle_gap_aggregation(
+        &self,
+        source_bars: &[Bar],
+        target_timeframe: Timeframe,
+    ) -> Option<Bar> {
         // Handle aggregation when there's a gap in the data
         // For now, we'll aggregate what we have
         self.aggregate_standard(source_bars, target_timeframe)
@@ -301,7 +312,10 @@ impl BarAggregator {
         for timeframe in timeframes {
             let pending = self.pending_bars.get(&timeframe).unwrap();
             if !pending.is_empty() {
-                if self.session_manager.is_session_boundary(timeframe, timestamp) {
+                if self
+                    .session_manager
+                    .is_session_boundary(timeframe, timestamp)
+                {
                     if let Some(bar) = self.aggregate_standard(pending, timeframe) {
                         closed_bars.push(bar.clone());
 
@@ -336,7 +350,15 @@ mod tests {
     use super::*;
     use chrono::Duration;
 
-    fn create_test_bar(symbol: &str, timeframe: Timeframe, start: i64, open: f64, high: f64, low: f64, close: f64) -> Bar {
+    fn create_test_bar(
+        symbol: &str,
+        timeframe: Timeframe,
+        start: i64,
+        open: f64,
+        high: f64,
+        low: f64,
+        close: f64,
+    ) -> Bar {
         Bar::new(
             symbol.to_string(),
             timeframe,

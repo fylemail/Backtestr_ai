@@ -1,7 +1,7 @@
 use backtestr_data::models::Bar;
-use chrono::{Datelike, DateTime, Duration};
 #[cfg(test)]
 use chrono::NaiveDateTime;
+use chrono::{DateTime, Datelike, Duration};
 
 use super::MarketSchedule;
 
@@ -66,8 +66,10 @@ impl GapDetector {
         let next_dt = next_start.unwrap();
 
         // Check for weekend gap (Friday to Sunday/Monday)
-        if prev_dt.weekday() == chrono::Weekday::Fri &&
-           (next_dt.weekday() == chrono::Weekday::Sun || next_dt.weekday() == chrono::Weekday::Mon) {
+        if prev_dt.weekday() == chrono::Weekday::Fri
+            && (next_dt.weekday() == chrono::Weekday::Sun
+                || next_dt.weekday() == chrono::Weekday::Mon)
+        {
             return true;
         }
 
@@ -107,8 +109,10 @@ impl GapDetector {
     }
 
     fn classify_gap(&self, prev_bar: &Bar, next_bar: &Bar) -> GapType {
-        let prev_end = DateTime::from_timestamp_millis(prev_bar.timestamp_end).map(|dt| dt.naive_utc());
-        let next_start = DateTime::from_timestamp_millis(next_bar.timestamp_start).map(|dt| dt.naive_utc());
+        let prev_end =
+            DateTime::from_timestamp_millis(prev_bar.timestamp_end).map(|dt| dt.naive_utc());
+        let next_start =
+            DateTime::from_timestamp_millis(next_bar.timestamp_start).map(|dt| dt.naive_utc());
 
         if prev_end.is_none() || next_start.is_none() {
             return GapType::Unknown;
@@ -118,14 +122,17 @@ impl GapDetector {
         let next_dt = next_start.unwrap();
 
         // Weekend gap
-        if prev_dt.weekday() == chrono::Weekday::Fri &&
-           (next_dt.weekday() == chrono::Weekday::Sun || next_dt.weekday() == chrono::Weekday::Mon) {
+        if prev_dt.weekday() == chrono::Weekday::Fri
+            && (next_dt.weekday() == chrono::Weekday::Sun
+                || next_dt.weekday() == chrono::Weekday::Mon)
+        {
             return GapType::Weekend;
         }
 
         // Check for holiday
-        if self.market_schedule.is_holiday(prev_dt.date()) ||
-           self.market_schedule.is_holiday(next_dt.date()) {
+        if self.market_schedule.is_holiday(prev_dt.date())
+            || self.market_schedule.is_holiday(next_dt.date())
+        {
             return GapType::Holiday;
         }
 
@@ -141,7 +148,12 @@ impl GapDetector {
         GapType::Data
     }
 
-    pub fn fill_gap(&self, prev_bar: &Bar, next_bar: &Bar, timeframe: backtestr_data::timeframe::Timeframe) -> Vec<Bar> {
+    pub fn fill_gap(
+        &self,
+        prev_bar: &Bar,
+        next_bar: &Bar,
+        timeframe: backtestr_data::timeframe::Timeframe,
+    ) -> Vec<Bar> {
         let mut filled_bars = Vec::new();
         let gap_duration_ms = next_bar.timestamp_start - prev_bar.timestamp_end;
         let bar_duration_ms = timeframe.duration_ms();
@@ -252,10 +264,11 @@ mod tests {
         let detector = GapDetector::new(Duration::hours(48));
 
         // Friday 5pm to Sunday 5pm (weekend gap)
-        let friday_close = NaiveDateTime::parse_from_str("2024-01-05 17:00:00", "%Y-%m-%d %H:%M:%S")
-            .unwrap()
-            .and_utc()
-            .timestamp_millis();
+        let friday_close =
+            NaiveDateTime::parse_from_str("2024-01-05 17:00:00", "%Y-%m-%d %H:%M:%S")
+                .unwrap()
+                .and_utc()
+                .timestamp_millis();
         let sunday_open = NaiveDateTime::parse_from_str("2024-01-07 17:00:00", "%Y-%m-%d %H:%M:%S")
             .unwrap()
             .and_utc()

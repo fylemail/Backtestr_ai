@@ -14,12 +14,12 @@ pub enum BarCompletionEvent {
 impl BarCompletionEvent {
     pub fn bar(&self) -> &Bar {
         match self {
-            Self::MinuteBar(bar) |
-            Self::FiveMinuteBar(bar) |
-            Self::FifteenMinuteBar(bar) |
-            Self::HourBar(bar) |
-            Self::FourHourBar(bar) |
-            Self::DailyBar(bar) => bar,
+            Self::MinuteBar(bar)
+            | Self::FiveMinuteBar(bar)
+            | Self::FifteenMinuteBar(bar)
+            | Self::HourBar(bar)
+            | Self::FourHourBar(bar)
+            | Self::DailyBar(bar) => bar,
         }
     }
 

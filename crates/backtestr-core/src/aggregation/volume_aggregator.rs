@@ -27,10 +27,7 @@ impl VolumeAggregator {
             return None;
         }
 
-        let total_volume: i64 = bars
-            .iter()
-            .filter_map(|b| b.volume)
-            .sum();
+        let total_volume: i64 = bars.iter().filter_map(|b| b.volume).sum();
 
         if total_volume > 0 {
             Some(total_volume)
@@ -44,10 +41,7 @@ impl VolumeAggregator {
             return None;
         }
 
-        let total_ticks: i32 = bars
-            .iter()
-            .filter_map(|b| b.tick_count)
-            .sum();
+        let total_ticks: i32 = bars.iter().filter_map(|b| b.tick_count).sum();
 
         if total_ticks > 0 {
             Some(total_ticks)
@@ -79,7 +73,11 @@ impl VolumeAggregator {
         }
     }
 
-    pub fn calculate_volume_weighted_price(&self, bars: &[Bar], price_type: PriceType) -> Option<f64> {
+    pub fn calculate_volume_weighted_price(
+        &self,
+        bars: &[Bar],
+        price_type: PriceType,
+    ) -> Option<f64> {
         if bars.is_empty() || !self.volume_weighted {
             return None;
         }
@@ -116,10 +114,7 @@ impl VolumeAggregator {
             return None;
         }
 
-        let volumes: Vec<i64> = bars
-            .iter()
-            .filter_map(|b| b.volume)
-            .collect();
+        let volumes: Vec<i64> = bars.iter().filter_map(|b| b.volume).collect();
 
         if volumes.is_empty() {
             return None;
@@ -281,8 +276,14 @@ impl VolumeProfile {
             return (0.0, 0.0);
         }
 
-        let min_va = value_area_levels.iter().copied().fold(f64::INFINITY, f64::min);
-        let max_va = value_area_levels.iter().copied().fold(f64::NEG_INFINITY, f64::max);
+        let min_va = value_area_levels
+            .iter()
+            .copied()
+            .fold(f64::INFINITY, f64::min);
+        let max_va = value_area_levels
+            .iter()
+            .copied()
+            .fold(f64::NEG_INFINITY, f64::max);
 
         (min_va, max_va)
     }

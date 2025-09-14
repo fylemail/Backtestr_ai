@@ -8,7 +8,12 @@ use chrono::{Duration, NaiveDateTime};
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::sync::Arc;
 
-fn create_test_bars(symbol: &str, start_timestamp: i64, count: usize, timeframe: Timeframe) -> Vec<Bar> {
+fn create_test_bars(
+    symbol: &str,
+    start_timestamp: i64,
+    count: usize,
+    timeframe: Timeframe,
+) -> Vec<Bar> {
     let mut bars = Vec::new();
     let duration = timeframe.duration_ms();
 
@@ -115,7 +120,12 @@ fn test_weekend_gap_handling() {
     let mut bars = Vec::new();
 
     // Friday bars
-    bars.extend(create_test_bars("EURUSD", friday_close - 300_000, 5, Timeframe::M1));
+    bars.extend(create_test_bars(
+        "EURUSD",
+        friday_close - 300_000,
+        5,
+        Timeframe::M1,
+    ));
 
     // Sunday bars (after gap)
     bars.extend(create_test_bars("EURUSD", sunday_open, 5, Timeframe::M1));
@@ -234,7 +244,7 @@ fn test_high_low_accuracy_across_aggregation() {
 
     // Verify high/low are correctly captured
     assert_eq!(aggregated.high, 1.0940); // Maximum high from all bars
-    assert_eq!(aggregated.low, 1.0910);  // Minimum low from all bars
+    assert_eq!(aggregated.low, 1.0910); // Minimum low from all bars
     assert_eq!(aggregated.open, 1.0920); // First bar's open
     assert_eq!(aggregated.close, 1.0918); // Last bar's close
 }
@@ -285,12 +295,16 @@ fn test_event_ordering_guarantee() {
     let order = events_order.lock().unwrap();
 
     // M5 events should come before M15 events
-    let m5_indices: Vec<_> = order.iter().enumerate()
+    let m5_indices: Vec<_> = order
+        .iter()
+        .enumerate()
         .filter(|(_, tf)| *tf == "5M")
         .map(|(i, _)| i)
         .collect();
 
-    let m15_indices: Vec<_> = order.iter().enumerate()
+    let m15_indices: Vec<_> = order
+        .iter()
+        .enumerate()
         .filter(|(_, tf)| *tf == "15M")
         .map(|(i, _)| i)
         .collect();
