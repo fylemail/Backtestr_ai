@@ -8,10 +8,14 @@ pub mod data;
 pub mod engine;
 pub mod events;
 pub mod indicators;
+pub mod interfaces;
 pub mod mtf;
 pub mod persistence;
 pub mod positions;
 pub mod python;
+
+#[cfg(test)]
+pub mod mocks;
 
 pub use engine::MTFEngine;
 pub use mtf::{MTFConfig, MTFStateManager, StateQuery};

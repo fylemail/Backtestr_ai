@@ -225,11 +225,50 @@ Before writing ANY code:
 4. Am I over-engineering?
 5. Does this maintain zero look-ahead bias?
 
+## Epic 2→3 Interface Contracts
+
+### Defined Interfaces
+Interface contracts have been established for Epic 3 integration:
+
+1. **PositionEventHandler** - Receives events from MTF engine
+   - `on_bar_complete()` - Called when bars complete
+   - `on_tick_update()` - Real-time tick processing
+   - `on_indicator_update()` - Indicator value changes
+
+2. **ExecutionContext** - Provides market data for execution
+   - `get_current_spread()` - Current bid/ask prices
+   - `get_bar_context()` - Bar data for slippage calculation
+   - `is_market_open()` - Session boundary checks
+
+3. **RiskContext** - Provides data for risk calculations
+   - `get_indicator()` - Access to calculated indicators
+   - `get_volatility()` - ATR or similar metrics
+   - `get_margin_requirement()` - Leverage settings
+
+4. **PositionStateStore** - Extends persistence for positions
+   - Compatible with Epic 2 checkpoint system
+   - Integrated recovery mechanisms
+
+### Performance Baselines (Epic 2 Complete)
+- Tick processing: <100μs ✅
+- Bar aggregation: <50μs ✅
+- Indicator updates: <50μs ✅
+- Memory (1M ticks): <500MB ✅
+- State recovery: <1 second ✅
+
+### Integration Points
+- **EventDispatcher**: Primary communication channel
+- **MTFStateManager**: Provides market context
+- **IndicatorPipeline**: Feeds risk calculations
+- **Interfaces defined in**: `crates/backtestr-core/src/interfaces/`
+- **Mock implementations**: `crates/backtestr-core/src/mocks/`
+
 ## Getting Help
 
 - Epic 2 Stories: `docs/stories/story-2.*.md`
-- Configuration: `docs/stories/epic-2-configuration-schema.md`
-- Review Analysis: `docs/stories/epic-2-story-review.md`
+- Epic 3 Planning: `docs/stories/epic-3/`
+- Performance Baseline: `docs/development/epic-2-performance-baseline.md`
+- Interface Contracts: `crates/backtestr-core/src/interfaces/epic3_contracts.rs`
 - Git strategy: `docs/development/git-strategy.md`
 
 ---
