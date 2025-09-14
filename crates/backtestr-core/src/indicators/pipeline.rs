@@ -73,7 +73,11 @@ impl IndicatorPipeline {
         }
     }
 
-    pub fn register_indicator(&self, name: String, indicator: Box<dyn Indicator<Input = BarData, Output = f64>>) {
+    pub fn register_indicator(
+        &self,
+        name: String,
+        indicator: Box<dyn Indicator<Input = BarData, Output = f64>>,
+    ) {
         debug!("Registering indicator: {}", name);
         self.indicators.insert(name, indicator);
     }
@@ -162,11 +166,20 @@ impl IndicatorPipeline {
         self.cache.get(indicator_name, timeframe).map(|v| v.value)
     }
 
-    pub fn get_indicator_value(&self, indicator_name: &str, timeframe: Timeframe) -> Option<IndicatorValue> {
+    pub fn get_indicator_value(
+        &self,
+        indicator_name: &str,
+        timeframe: Timeframe,
+    ) -> Option<IndicatorValue> {
         self.cache.get(indicator_name, timeframe)
     }
 
-    pub fn get_history(&self, indicator_name: &str, timeframe: Timeframe, count: usize) -> Vec<IndicatorValue> {
+    pub fn get_history(
+        &self,
+        indicator_name: &str,
+        timeframe: Timeframe,
+        count: usize,
+    ) -> Vec<IndicatorValue> {
         self.cache.get_history(indicator_name, timeframe, count)
     }
 
@@ -190,7 +203,10 @@ impl IndicatorPipeline {
     }
 
     pub fn get_indicator_names(&self) -> Vec<String> {
-        self.indicators.iter().map(|entry| entry.key().clone()).collect()
+        self.indicators
+            .iter()
+            .map(|entry| entry.key().clone())
+            .collect()
     }
 
     pub fn get_stats(&self) -> PipelineStats {

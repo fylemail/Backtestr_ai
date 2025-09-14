@@ -3,11 +3,11 @@
 //! This module provides a high-performance, lock-free cache for storing
 //! and retrieving indicator values across multiple timeframes.
 
+use super::indicator_trait::IndicatorValue;
+use backtestr_data::Timeframe;
 use dashmap::DashMap;
 use std::collections::VecDeque;
 use std::sync::Arc;
-use backtestr_data::Timeframe;
-use super::indicator_trait::IndicatorValue;
 
 /// Thread-safe cache for storing indicator values with history.
 ///
@@ -55,7 +55,10 @@ impl IndicatorCache {
     /// * `timeframe` - Timeframe context
     /// * `value` - The indicator value to cache
     pub fn insert(&self, indicator_name: String, timeframe: Timeframe, value: IndicatorValue) {
-        let mut entry = self.values.entry((indicator_name, timeframe)).or_insert_with(VecDeque::new);
+        let mut entry = self
+            .values
+            .entry((indicator_name, timeframe))
+            .or_insert_with(VecDeque::new);
 
         entry.push_back(value);
 
@@ -91,7 +94,12 @@ impl IndicatorCache {
     /// # Returns
     ///
     /// Vector of historical values in chronological order (oldest first).
-    pub fn get_history(&self, indicator_name: &str, timeframe: Timeframe, count: usize) -> Vec<IndicatorValue> {
+    pub fn get_history(
+        &self,
+        indicator_name: &str,
+        timeframe: Timeframe,
+        count: usize,
+    ) -> Vec<IndicatorValue> {
         self.values
             .get(&(indicator_name.to_string(), timeframe))
             .map(|values| {

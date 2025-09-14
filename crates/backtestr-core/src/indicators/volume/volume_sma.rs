@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use crate::indicators::indicator_trait::{BarData, Indicator};
+use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct VolumeSMA {
@@ -72,10 +72,38 @@ mod tests {
         let mut vol_sma = VolumeSMA::new(3);
 
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.0, close: 102.0, volume: 1500.0, timestamp: 2 },
-            BarData { open: 102.0, high: 104.0, low: 101.0, close: 103.0, volume: 2000.0, timestamp: 3 },
-            BarData { open: 103.0, high: 105.0, low: 102.0, close: 104.0, volume: 1200.0, timestamp: 4 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 101.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.0,
+                close: 102.0,
+                volume: 1500.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.0,
+                high: 104.0,
+                low: 101.0,
+                close: 103.0,
+                volume: 2000.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 103.0,
+                high: 105.0,
+                low: 102.0,
+                close: 104.0,
+                volume: 1200.0,
+                timestamp: 4,
+            },
         ];
 
         assert_eq!(vol_sma.update(bars[0].clone()), None);

@@ -1,6 +1,6 @@
-use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
 use backtestr_core::indicators::*;
 use backtestr_data::Timeframe;
+use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use std::time::Duration;
 
 fn generate_bar_data(count: usize) -> Vec<BarData> {
@@ -126,43 +126,33 @@ fn bench_pipeline_update_all(c: &mut Criterion) {
                 // Register indicators
                 for i in 0..num {
                     match i % 7 {
-                        0 => pipeline.register_indicator(
-                            format!("SMA_{}", i),
-                            Box::new(SMA::new(20))
-                        ),
-                        1 => pipeline.register_indicator(
-                            format!("EMA_{}", i),
-                            Box::new(EMA::new(20))
-                        ),
-                        2 => pipeline.register_indicator(
-                            format!("RSI_{}", i),
-                            Box::new(RSI::new(14))
-                        ),
+                        0 => pipeline
+                            .register_indicator(format!("SMA_{}", i), Box::new(SMA::new(20))),
+                        1 => pipeline
+                            .register_indicator(format!("EMA_{}", i), Box::new(EMA::new(20))),
+                        2 => pipeline
+                            .register_indicator(format!("RSI_{}", i), Box::new(RSI::new(14))),
                         3 => pipeline.register_indicator(
                             format!("MACD_{}", i),
-                            Box::new(MACD::new(12, 26, 9))
+                            Box::new(MACD::new(12, 26, 9)),
                         ),
                         4 => pipeline.register_indicator(
                             format!("BB_{}", i),
-                            Box::new(BollingerBands::new(20, 2.0))
+                            Box::new(BollingerBands::new(20, 2.0)),
                         ),
-                        5 => pipeline.register_indicator(
-                            format!("ADX_{}", i),
-                            Box::new(ADX::new(14))
-                        ),
+                        5 => pipeline
+                            .register_indicator(format!("ADX_{}", i), Box::new(ADX::new(14))),
                         _ => pipeline.register_indicator(
                             format!("SAR_{}", i),
-                            Box::new(ParabolicSAR::new(0.02, 0.2))
+                            Box::new(ParabolicSAR::new(0.02, 0.2)),
                         ),
                     }
                 }
 
                 let mut idx = 0;
                 b.iter(|| {
-                    let result = pipeline.update_all(
-                        black_box(&bars[idx % bars.len()]),
-                        Timeframe::M1
-                    );
+                    let result =
+                        pipeline.update_all(black_box(&bars[idx % bars.len()]), Timeframe::M1);
                     idx += 1;
                     black_box(result)
                 });
@@ -181,10 +171,7 @@ fn bench_cache_retrieval(c: &mut Criterion) {
     // Populate the cache
     let bars = generate_bar_data(100);
     for i in 0..20 {
-        pipeline.register_indicator(
-            format!("IND_{}", i),
-            Box::new(SMA::new(20))
-        );
+        pipeline.register_indicator(format!("IND_{}", i), Box::new(SMA::new(20)));
     }
 
     // Warm up the indicators
@@ -193,15 +180,11 @@ fn bench_cache_retrieval(c: &mut Criterion) {
     }
 
     group.bench_function("get_value", |b| {
-        b.iter(|| {
-            black_box(pipeline.get_value("IND_10", Timeframe::M1))
-        });
+        b.iter(|| black_box(pipeline.get_value("IND_10", Timeframe::M1)));
     });
 
     group.bench_function("get_history_10", |b| {
-        b.iter(|| {
-            black_box(pipeline.get_history("IND_10", Timeframe::M1, 10))
-        });
+        b.iter(|| black_box(pipeline.get_history("IND_10", Timeframe::M1, 10)));
     });
 
     group.finish();
@@ -218,22 +201,11 @@ fn bench_memory_usage(c: &mut Criterion) {
             // Register 20 indicators
             for i in 0..20 {
                 match i % 4 {
-                    0 => pipeline.register_indicator(
-                        format!("SMA_{}", i),
-                        Box::new(SMA::new(20))
-                    ),
-                    1 => pipeline.register_indicator(
-                        format!("EMA_{}", i),
-                        Box::new(EMA::new(20))
-                    ),
-                    2 => pipeline.register_indicator(
-                        format!("RSI_{}", i),
-                        Box::new(RSI::new(14))
-                    ),
-                    _ => pipeline.register_indicator(
-                        format!("MACD_{}", i),
-                        Box::new(MACD::new(12, 26, 9))
-                    ),
+                    0 => pipeline.register_indicator(format!("SMA_{}", i), Box::new(SMA::new(20))),
+                    1 => pipeline.register_indicator(format!("EMA_{}", i), Box::new(EMA::new(20))),
+                    2 => pipeline.register_indicator(format!("RSI_{}", i), Box::new(RSI::new(14))),
+                    _ => pipeline
+                        .register_indicator(format!("MACD_{}", i), Box::new(MACD::new(12, 26, 9))),
                 }
             }
 

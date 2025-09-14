@@ -3,8 +3,8 @@
 //! ADX measures the strength of a trend, regardless of direction.
 //! Values above 25 typically indicate a strong trend.
 
-use std::collections::VecDeque;
 use crate::indicators::indicator_trait::{BarData, Indicator};
+use std::collections::VecDeque;
 
 /// Average Directional Index (ADX) indicator.
 ///
@@ -135,9 +135,11 @@ impl Indicator for ADX {
         self.previous_low = Some(input.low);
 
         // Calculate DI+ and DI-
-        if let (Some(smooth_plus_dm), Some(smooth_minus_dm), Some(smooth_tr)) =
-            (self.plus_dm_ema.current(), self.minus_dm_ema.current(), self.atr_ema.current()) {
-
+        if let (Some(smooth_plus_dm), Some(smooth_minus_dm), Some(smooth_tr)) = (
+            self.plus_dm_ema.current(),
+            self.minus_dm_ema.current(),
+            self.atr_ema.current(),
+        ) {
             if smooth_tr > 0.0 {
                 let plus_di = (smooth_plus_dm / smooth_tr) * 100.0;
                 let minus_di = (smooth_minus_dm / smooth_tr) * 100.0;

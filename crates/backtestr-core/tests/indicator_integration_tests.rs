@@ -3,16 +3,86 @@ use backtestr_data::Timeframe;
 
 fn create_test_bars() -> Vec<BarData> {
     vec![
-        BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-        BarData { open: 101.0, high: 103.0, low: 100.0, close: 102.0, volume: 1100.0, timestamp: 2 },
-        BarData { open: 102.0, high: 104.0, low: 101.0, close: 103.0, volume: 1200.0, timestamp: 3 },
-        BarData { open: 103.0, high: 105.0, low: 102.0, close: 104.0, volume: 1300.0, timestamp: 4 },
-        BarData { open: 104.0, high: 106.0, low: 103.0, close: 105.0, volume: 1400.0, timestamp: 5 },
-        BarData { open: 105.0, high: 107.0, low: 104.0, close: 106.0, volume: 1500.0, timestamp: 6 },
-        BarData { open: 106.0, high: 108.0, low: 105.0, close: 107.0, volume: 1600.0, timestamp: 7 },
-        BarData { open: 107.0, high: 109.0, low: 106.0, close: 108.0, volume: 1700.0, timestamp: 8 },
-        BarData { open: 108.0, high: 110.0, low: 107.0, close: 109.0, volume: 1800.0, timestamp: 9 },
-        BarData { open: 109.0, high: 111.0, low: 108.0, close: 110.0, volume: 1900.0, timestamp: 10 },
+        BarData {
+            open: 100.0,
+            high: 102.0,
+            low: 99.0,
+            close: 101.0,
+            volume: 1000.0,
+            timestamp: 1,
+        },
+        BarData {
+            open: 101.0,
+            high: 103.0,
+            low: 100.0,
+            close: 102.0,
+            volume: 1100.0,
+            timestamp: 2,
+        },
+        BarData {
+            open: 102.0,
+            high: 104.0,
+            low: 101.0,
+            close: 103.0,
+            volume: 1200.0,
+            timestamp: 3,
+        },
+        BarData {
+            open: 103.0,
+            high: 105.0,
+            low: 102.0,
+            close: 104.0,
+            volume: 1300.0,
+            timestamp: 4,
+        },
+        BarData {
+            open: 104.0,
+            high: 106.0,
+            low: 103.0,
+            close: 105.0,
+            volume: 1400.0,
+            timestamp: 5,
+        },
+        BarData {
+            open: 105.0,
+            high: 107.0,
+            low: 104.0,
+            close: 106.0,
+            volume: 1500.0,
+            timestamp: 6,
+        },
+        BarData {
+            open: 106.0,
+            high: 108.0,
+            low: 105.0,
+            close: 107.0,
+            volume: 1600.0,
+            timestamp: 7,
+        },
+        BarData {
+            open: 107.0,
+            high: 109.0,
+            low: 106.0,
+            close: 108.0,
+            volume: 1700.0,
+            timestamp: 8,
+        },
+        BarData {
+            open: 108.0,
+            high: 110.0,
+            low: 107.0,
+            close: 109.0,
+            volume: 1800.0,
+            timestamp: 9,
+        },
+        BarData {
+            open: 109.0,
+            high: 111.0,
+            low: 108.0,
+            close: 110.0,
+            volume: 1900.0,
+            timestamp: 10,
+        },
     ]
 }
 
@@ -46,10 +116,7 @@ fn test_pipeline_parallel_processing() {
 
     // Register more than 5 indicators to trigger parallel processing
     for i in 0..10 {
-        pipeline.register_indicator(
-            format!("SMA_{}", i),
-            Box::new(SMA::new(5))
-        );
+        pipeline.register_indicator(format!("SMA_{}", i), Box::new(SMA::new(5)));
     }
 
     let bars = create_test_bars();
@@ -64,7 +131,9 @@ fn test_pipeline_parallel_processing() {
     pipeline.update_all(last_bar, Timeframe::M1).unwrap();
 
     for i in 0..10 {
-        assert!(pipeline.get_value(&format!("SMA_{}", i), Timeframe::M1).is_some());
+        assert!(pipeline
+            .get_value(&format!("SMA_{}", i), Timeframe::M1)
+            .is_some());
     }
 }
 
@@ -223,7 +292,10 @@ fn test_new_parabolic_sar_implementation() {
         }
     }
 
-    assert!(has_value, "Parabolic SAR should produce values after warm-up");
+    assert!(
+        has_value,
+        "Parabolic SAR should produce values after warm-up"
+    );
 }
 
 #[test]
@@ -240,17 +312,32 @@ fn test_all_indicators_produce_values() {
     pipeline.register_indicator("Stochastic".to_string(), Box::new(Stochastic::new(5, 3)));
     pipeline.register_indicator("CCI".to_string(), Box::new(CCI::new(5)));
     pipeline.register_indicator("WilliamsR".to_string(), Box::new(WilliamsR::new(5)));
-    pipeline.register_indicator("BollingerBands".to_string(), Box::new(BollingerBands::new(5, 2.0)));
+    pipeline.register_indicator(
+        "BollingerBands".to_string(),
+        Box::new(BollingerBands::new(5, 2.0)),
+    );
     pipeline.register_indicator("ATR".to_string(), Box::new(ATR::new(5)));
-    pipeline.register_indicator("KeltnerChannels".to_string(), Box::new(KeltnerChannels::new(5, 2.0)));
-    pipeline.register_indicator("DonchianChannels".to_string(), Box::new(DonchianChannels::new(5)));
+    pipeline.register_indicator(
+        "KeltnerChannels".to_string(),
+        Box::new(KeltnerChannels::new(5, 2.0)),
+    );
+    pipeline.register_indicator(
+        "DonchianChannels".to_string(),
+        Box::new(DonchianChannels::new(5)),
+    );
     pipeline.register_indicator("OBV".to_string(), Box::new(OBV::new()));
     pipeline.register_indicator("VolumeSMA".to_string(), Box::new(VolumeSMA::new(5)));
     pipeline.register_indicator("VWAP".to_string(), Box::new(VWAP::new(false)));
     pipeline.register_indicator("PivotPoints".to_string(), Box::new(PivotPoints::new()));
-    pipeline.register_indicator("SupportResistance".to_string(), Box::new(SupportResistance::new(5)));
+    pipeline.register_indicator(
+        "SupportResistance".to_string(),
+        Box::new(SupportResistance::new(5)),
+    );
     pipeline.register_indicator("ADX".to_string(), Box::new(ADX::new(5)));
-    pipeline.register_indicator("ParabolicSAR".to_string(), Box::new(ParabolicSAR::new(0.02, 0.2)));
+    pipeline.register_indicator(
+        "ParabolicSAR".to_string(),
+        Box::new(ParabolicSAR::new(0.02, 0.2)),
+    );
 
     // Generate enough bars for all indicators
     let mut bars = Vec::new();

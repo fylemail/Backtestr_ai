@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use crate::indicators::indicator_trait::{BarData, Indicator};
+use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct WilliamsR {
@@ -78,11 +78,46 @@ mod tests {
         let mut williams = WilliamsR::new(5);
 
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.0, close: 102.0, volume: 1100.0, timestamp: 2 },
-            BarData { open: 102.0, high: 104.0, low: 101.0, close: 103.0, volume: 1200.0, timestamp: 3 },
-            BarData { open: 103.0, high: 105.0, low: 102.0, close: 104.0, volume: 1300.0, timestamp: 4 },
-            BarData { open: 104.0, high: 106.0, low: 103.0, close: 105.0, volume: 1400.0, timestamp: 5 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 101.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.0,
+                close: 102.0,
+                volume: 1100.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.0,
+                high: 104.0,
+                low: 101.0,
+                close: 103.0,
+                volume: 1200.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 103.0,
+                high: 105.0,
+                low: 102.0,
+                close: 104.0,
+                volume: 1300.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 104.0,
+                high: 106.0,
+                low: 103.0,
+                close: 105.0,
+                volume: 1400.0,
+                timestamp: 5,
+            },
         ];
 
         for (i, bar) in bars.iter().enumerate() {
@@ -122,8 +157,8 @@ mod tests {
             let bar = BarData {
                 open: 100.0,
                 high: 100.0 + 0.1,
-                low: 100.0 - i as f64,  // Price going lower
-                close: 100.0 - i as f64,  // Close at the low
+                low: 100.0 - i as f64,   // Price going lower
+                close: 100.0 - i as f64, // Close at the low
                 volume: 1000.0,
                 timestamp: i as i64,
             };

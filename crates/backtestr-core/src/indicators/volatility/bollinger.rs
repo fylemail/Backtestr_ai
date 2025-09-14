@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use crate::indicators::indicator_trait::{BarData, Indicator};
+use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct BollingerBands {
@@ -32,20 +32,28 @@ impl BollingerBands {
 
     pub fn get_bands(&self) -> Option<BollingerOutput> {
         if let (Some(upper), Some(middle), Some(lower)) =
-            (self.current_upper, self.current_middle, self.current_lower) {
-            Some(BollingerOutput { upper, middle, lower })
+            (self.current_upper, self.current_middle, self.current_lower)
+        {
+            Some(BollingerOutput {
+                upper,
+                middle,
+                lower,
+            })
         } else {
             None
         }
     }
 
     fn calculate_std_dev(&self, mean: f64) -> f64 {
-        let variance = self.values.iter()
+        let variance = self
+            .values
+            .iter()
             .map(|&v| {
                 let diff = v - mean;
                 diff * diff
             })
-            .sum::<f64>() / self.period as f64;
+            .sum::<f64>()
+            / self.period as f64;
 
         variance.sqrt()
     }
@@ -109,11 +117,46 @@ mod tests {
         let mut bb = BollingerBands::new(5, 2.0);
 
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 100.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.0, close: 102.0, volume: 1100.0, timestamp: 2 },
-            BarData { open: 102.0, high: 104.0, low: 101.0, close: 103.0, volume: 1200.0, timestamp: 3 },
-            BarData { open: 103.0, high: 105.0, low: 102.0, close: 104.0, volume: 1300.0, timestamp: 4 },
-            BarData { open: 104.0, high: 106.0, low: 103.0, close: 105.0, volume: 1400.0, timestamp: 5 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 100.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.0,
+                close: 102.0,
+                volume: 1100.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.0,
+                high: 104.0,
+                low: 101.0,
+                close: 103.0,
+                volume: 1200.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 103.0,
+                high: 105.0,
+                low: 102.0,
+                close: 104.0,
+                volume: 1300.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 104.0,
+                high: 106.0,
+                low: 103.0,
+                close: 105.0,
+                volume: 1400.0,
+                timestamp: 5,
+            },
         ];
 
         for (i, bar) in bars.iter().enumerate() {

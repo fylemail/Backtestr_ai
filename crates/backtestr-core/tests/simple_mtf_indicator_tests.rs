@@ -1,7 +1,7 @@
 //! Simple integration tests for indicator pipeline with MTF components.
 
 use backtestr_core::indicators::*;
-use backtestr_core::mtf::{MTFStateManager, MTFConfig};
+use backtestr_core::mtf::{MTFConfig, MTFStateManager};
 use backtestr_data::{Tick, Timeframe};
 use std::sync::Arc;
 
@@ -125,16 +125,26 @@ fn test_indicator_pipeline_parallel_processing() {
     for (i, bar) in bars.iter().enumerate() {
         let result = pipeline.update_all(bar, Timeframe::M1).unwrap();
         if result.failed_count > 0 {
-            println!("Bar {}: {} indicators failed, {} updated", i, result.failed_count, result.updated_count);
+            println!(
+                "Bar {}: {} indicators failed, {} updated",
+                i, result.failed_count, result.updated_count
+            );
         }
         // ADX needs lots of warm-up time, allow a few failures
         if i > 50 && result.failed_count > 2 {
-            println!("Warning: {} indicators still failing after 50 bars", result.failed_count);
+            println!(
+                "Warning: {} indicators still failing after 50 bars",
+                result.failed_count
+            );
         }
     }
 
     let elapsed = start.elapsed();
-    println!("Processed {} bars with 16 indicators in {:?}", bars.len(), elapsed);
+    println!(
+        "Processed {} bars with 16 indicators in {:?}",
+        bars.len(),
+        elapsed
+    );
 
     // Performance target: <50μs per update (informational in debug builds)
     let avg_update_time = elapsed.as_micros() as f64 / bars.len() as f64;
@@ -142,12 +152,18 @@ fn test_indicator_pipeline_parallel_processing() {
 
     // Only enforce timing in release builds where optimization is on
     #[cfg(not(debug_assertions))]
-    assert!(avg_update_time < 100.0, "Average update should be under 100μs in release mode");
+    assert!(
+        avg_update_time < 100.0,
+        "Average update should be under 100μs in release mode"
+    );
 
     // In debug mode, just warn if it's slow
     #[cfg(debug_assertions)]
     if avg_update_time > 150.0 {
-        println!("Warning: Performance is slow in debug mode ({:.2}μs), but this is expected", avg_update_time);
+        println!(
+            "Warning: Performance is slow in debug mode ({:.2}μs), but this is expected",
+            avg_update_time
+        );
     }
 }
 
@@ -188,7 +204,7 @@ fn test_indicator_caching() {
 
     // Verify chronological order
     for i in 1..m1_history.len() {
-        assert!(m1_history[i].timestamp > m1_history[i-1].timestamp);
+        assert!(m1_history[i].timestamp > m1_history[i - 1].timestamp);
     }
 }
 

@@ -185,7 +185,10 @@ impl Default for IndicatorDefaults {
 /// Factory trait for creating indicator instances with default parameters.
 pub trait IndicatorFactory: Send + Sync {
     /// Creates a new indicator instance with the given default parameters.
-    fn create(&self, params: &IndicatorDefaults) -> Box<dyn Indicator<Input = BarData, Output = f64>>;
+    fn create(
+        &self,
+        params: &IndicatorDefaults,
+    ) -> Box<dyn Indicator<Input = BarData, Output = f64>>;
 
     /// Returns the name of the indicator this factory creates.
     fn name(&self) -> &str;

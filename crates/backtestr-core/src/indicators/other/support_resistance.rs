@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use crate::indicators::indicator_trait::{BarData, Indicator};
+use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct SupportResistance {
@@ -29,7 +29,10 @@ impl SupportResistance {
 
     pub fn get_levels(&self) -> Option<SupportResistanceOutput> {
         if let (Some(support), Some(resistance)) = (self.current_support, self.current_resistance) {
-            Some(SupportResistanceOutput { support, resistance })
+            Some(SupportResistanceOutput {
+                support,
+                resistance,
+            })
         } else {
             None
         }

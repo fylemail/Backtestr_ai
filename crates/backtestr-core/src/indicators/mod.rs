@@ -74,22 +74,22 @@
 //! }
 //! ```
 
-pub mod indicator_trait;
 pub mod cache;
+pub mod indicator_trait;
+pub mod momentum;
+pub mod other;
 pub mod pipeline;
 pub mod trend;
-pub mod momentum;
 pub mod volatility;
 pub mod volume;
-pub mod other;
 
-pub use indicator_trait::{Indicator, IndicatorDefaults, IndicatorValue, BarData};
 pub use cache::IndicatorCache;
+pub use indicator_trait::{BarData, Indicator, IndicatorDefaults, IndicatorValue};
 pub use pipeline::IndicatorPipeline;
 
 // Re-export all indicators
-pub use trend::{SMA, EMA, WMA, DEMA};
-pub use momentum::{RSI, MACD, Stochastic, CCI, WilliamsR};
-pub use volatility::{BollingerBands, ATR, KeltnerChannels, DonchianChannels};
-pub use volume::{OBV, VolumeSMA, VWAP};
-pub use other::{PivotPoints, SupportResistance, ADX, ParabolicSAR};
+pub use momentum::{Stochastic, WilliamsR, CCI, MACD, RSI};
+pub use other::{ParabolicSAR, PivotPoints, SupportResistance, ADX};
+pub use trend::{DEMA, EMA, SMA, WMA};
+pub use volatility::{BollingerBands, DonchianChannels, KeltnerChannels, ATR};
+pub use volume::{VolumeSMA, OBV, VWAP};

@@ -36,9 +36,20 @@ impl PivotPoints {
     }
 
     pub fn get_levels(&self) -> Option<PivotOutput> {
-        if let (Some(pivot), Some(r1), Some(r2), Some(s1), Some(s2)) =
-            (self.current_pivot, self.current_r1, self.current_r2, self.current_s1, self.current_s2) {
-            Some(PivotOutput { pivot, r1, r2, s1, s2 })
+        if let (Some(pivot), Some(r1), Some(r2), Some(s1), Some(s2)) = (
+            self.current_pivot,
+            self.current_r1,
+            self.current_r2,
+            self.current_s1,
+            self.current_s2,
+        ) {
+            Some(PivotOutput {
+                pivot,
+                r1,
+                r2,
+                s1,
+                s2,
+            })
         } else {
             None
         }
@@ -65,8 +76,8 @@ impl Indicator for PivotPoints {
 
     fn update(&mut self, input: BarData) -> Option<f64> {
         if let (Some(prev_high), Some(prev_low), Some(prev_close)) =
-            (self.previous_high, self.previous_low, self.previous_close) {
-
+            (self.previous_high, self.previous_low, self.previous_close)
+        {
             let pivot = (prev_high + prev_low + prev_close) / 3.0;
             let r1 = 2.0 * pivot - prev_low;
             let r2 = pivot + (prev_high - prev_low);

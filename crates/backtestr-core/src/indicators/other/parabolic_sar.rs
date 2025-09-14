@@ -177,11 +177,46 @@ mod tests {
 
         // Create uptrend data
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.5, close: 102.5, volume: 1000.0, timestamp: 2 },
-            BarData { open: 102.5, high: 104.0, low: 101.0, close: 103.5, volume: 1000.0, timestamp: 3 },
-            BarData { open: 103.5, high: 105.0, low: 102.0, close: 104.5, volume: 1000.0, timestamp: 4 },
-            BarData { open: 104.5, high: 106.0, low: 103.0, close: 105.5, volume: 1000.0, timestamp: 5 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 101.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.5,
+                close: 102.5,
+                volume: 1000.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.5,
+                high: 104.0,
+                low: 101.0,
+                close: 103.5,
+                volume: 1000.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 103.5,
+                high: 105.0,
+                low: 102.0,
+                close: 104.5,
+                volume: 1000.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 104.5,
+                high: 106.0,
+                low: 103.0,
+                close: 105.5,
+                volume: 1000.0,
+                timestamp: 5,
+            },
         ];
 
         let mut values = Vec::new();
@@ -206,12 +241,47 @@ mod tests {
 
         // Create data with reversal
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.5, close: 102.5, volume: 1000.0, timestamp: 2 },
-            BarData { open: 102.5, high: 104.0, low: 101.0, close: 103.5, volume: 1000.0, timestamp: 3 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 101.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.5,
+                close: 102.5,
+                volume: 1000.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.5,
+                high: 104.0,
+                low: 101.0,
+                close: 103.5,
+                volume: 1000.0,
+                timestamp: 3,
+            },
             // Reversal bars
-            BarData { open: 103.5, high: 104.0, low: 100.0, close: 100.5, volume: 1000.0, timestamp: 4 },
-            BarData { open: 100.5, high: 101.0, low: 98.0, close: 98.5, volume: 1000.0, timestamp: 5 },
+            BarData {
+                open: 103.5,
+                high: 104.0,
+                low: 100.0,
+                close: 100.5,
+                volume: 1000.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 100.5,
+                high: 101.0,
+                low: 98.0,
+                close: 98.5,
+                volume: 1000.0,
+                timestamp: 5,
+            },
         ];
 
         let mut position_changed = false;
@@ -239,11 +309,46 @@ mod tests {
 
         // Create strong uptrend to test acceleration
         let bars = vec![
-            BarData { open: 100.0, high: 101.0, low: 99.0, close: 100.5, volume: 1000.0, timestamp: 1 },
-            BarData { open: 100.5, high: 103.0, low: 100.0, close: 102.5, volume: 1000.0, timestamp: 2 },
-            BarData { open: 102.5, high: 105.0, low: 102.0, close: 104.5, volume: 1000.0, timestamp: 3 },
-            BarData { open: 104.5, high: 107.0, low: 104.0, close: 106.5, volume: 1000.0, timestamp: 4 },
-            BarData { open: 106.5, high: 109.0, low: 106.0, close: 108.5, volume: 1000.0, timestamp: 5 },
+            BarData {
+                open: 100.0,
+                high: 101.0,
+                low: 99.0,
+                close: 100.5,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 100.5,
+                high: 103.0,
+                low: 100.0,
+                close: 102.5,
+                volume: 1000.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.5,
+                high: 105.0,
+                low: 102.0,
+                close: 104.5,
+                volume: 1000.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 104.5,
+                high: 107.0,
+                low: 104.0,
+                close: 106.5,
+                volume: 1000.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 106.5,
+                high: 109.0,
+                low: 106.0,
+                close: 108.5,
+                volume: 1000.0,
+                timestamp: 5,
+            },
         ];
 
         let initial_af = sar.acceleration_factor;

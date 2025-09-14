@@ -139,8 +139,13 @@ impl KeltnerChannels {
 
     pub fn get_channels(&self) -> Option<KeltnerOutput> {
         if let (Some(upper), Some(middle), Some(lower)) =
-            (self.current_upper, self.current_middle, self.current_lower) {
-            Some(KeltnerOutput { upper, middle, lower })
+            (self.current_upper, self.current_middle, self.current_lower)
+        {
+            Some(KeltnerOutput {
+                upper,
+                middle,
+                lower,
+            })
         } else {
             None
         }
@@ -200,12 +205,54 @@ mod tests {
         let mut kc = KeltnerChannels::new(5, 2.0);
 
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.0, close: 102.0, volume: 1100.0, timestamp: 2 },
-            BarData { open: 102.0, high: 104.0, low: 101.0, close: 103.0, volume: 1200.0, timestamp: 3 },
-            BarData { open: 103.0, high: 105.0, low: 102.0, close: 104.0, volume: 1300.0, timestamp: 4 },
-            BarData { open: 104.0, high: 106.0, low: 103.0, close: 105.0, volume: 1400.0, timestamp: 5 },
-            BarData { open: 105.0, high: 107.0, low: 104.0, close: 106.0, volume: 1500.0, timestamp: 6 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 101.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.0,
+                close: 102.0,
+                volume: 1100.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.0,
+                high: 104.0,
+                low: 101.0,
+                close: 103.0,
+                volume: 1200.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 103.0,
+                high: 105.0,
+                low: 102.0,
+                close: 104.0,
+                volume: 1300.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 104.0,
+                high: 106.0,
+                low: 103.0,
+                close: 105.0,
+                volume: 1400.0,
+                timestamp: 5,
+            },
+            BarData {
+                open: 105.0,
+                high: 107.0,
+                low: 104.0,
+                close: 106.0,
+                volume: 1500.0,
+                timestamp: 6,
+            },
         ];
 
         for bar in bars {

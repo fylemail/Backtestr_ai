@@ -83,9 +83,16 @@ impl MACD {
     }
 
     pub fn get_output(&self) -> Option<MACDOutput> {
-        if let (Some(macd), Some(signal), Some(histogram)) =
-            (self.current_macd, self.current_signal, self.current_histogram) {
-            Some(MACDOutput { macd, signal, histogram })
+        if let (Some(macd), Some(signal), Some(histogram)) = (
+            self.current_macd,
+            self.current_signal,
+            self.current_histogram,
+        ) {
+            Some(MACDOutput {
+                macd,
+                signal,
+                histogram,
+            })
         } else {
             None
         }

@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
 use crate::indicators::indicator_trait::{BarData, Indicator};
+use std::collections::VecDeque;
 
 #[derive(Debug)]
 pub struct CCI {
@@ -22,7 +22,9 @@ impl CCI {
     }
 
     fn calculate_mean_deviation(&self, sma: f64) -> f64 {
-        let sum: f64 = self.typical_prices.iter()
+        let sum: f64 = self
+            .typical_prices
+            .iter()
             .map(|&price| (price - sma).abs())
             .sum();
         sum / self.period as f64
@@ -85,11 +87,46 @@ mod tests {
         let mut cci = CCI::new(5);
 
         let bars = vec![
-            BarData { open: 100.0, high: 102.0, low: 99.0, close: 101.0, volume: 1000.0, timestamp: 1 },
-            BarData { open: 101.0, high: 103.0, low: 100.0, close: 102.0, volume: 1100.0, timestamp: 2 },
-            BarData { open: 102.0, high: 104.0, low: 101.0, close: 103.0, volume: 1200.0, timestamp: 3 },
-            BarData { open: 103.0, high: 105.0, low: 102.0, close: 104.0, volume: 1300.0, timestamp: 4 },
-            BarData { open: 104.0, high: 106.0, low: 103.0, close: 105.0, volume: 1400.0, timestamp: 5 },
+            BarData {
+                open: 100.0,
+                high: 102.0,
+                low: 99.0,
+                close: 101.0,
+                volume: 1000.0,
+                timestamp: 1,
+            },
+            BarData {
+                open: 101.0,
+                high: 103.0,
+                low: 100.0,
+                close: 102.0,
+                volume: 1100.0,
+                timestamp: 2,
+            },
+            BarData {
+                open: 102.0,
+                high: 104.0,
+                low: 101.0,
+                close: 103.0,
+                volume: 1200.0,
+                timestamp: 3,
+            },
+            BarData {
+                open: 103.0,
+                high: 105.0,
+                low: 102.0,
+                close: 104.0,
+                volume: 1300.0,
+                timestamp: 4,
+            },
+            BarData {
+                open: 104.0,
+                high: 106.0,
+                low: 103.0,
+                close: 105.0,
+                volume: 1400.0,
+                timestamp: 5,
+            },
         ];
 
         for (i, bar) in bars.iter().enumerate() {
