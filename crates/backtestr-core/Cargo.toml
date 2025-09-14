@@ -17,6 +17,9 @@ tracing = { workspace = true }
 rayon = { workspace = true }
 crossbeam = { workspace = true }
 
+# Internal dependencies
+backtestr-data = { path = "../backtestr-data" }
+
 # Core-specific dependencies
 chrono = { version = "0.4", features = ["serde"] }
 ordered-float = "4.2"
@@ -25,4 +28,8 @@ dashmap = "5.5"
 [dev-dependencies]
 proptest = { workspace = true }
 criterion = { workspace = true }
+
+[[bench]]
+name = "mtf_benchmarks"
+harness = false
 

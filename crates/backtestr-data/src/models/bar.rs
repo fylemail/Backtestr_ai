@@ -1,4 +1,4 @@
-use backtestr_core::Timeframe;
+use crate::timeframe::Timeframe;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

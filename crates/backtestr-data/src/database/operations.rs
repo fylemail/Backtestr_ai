@@ -1,7 +1,7 @@
 use super::connection::Database;
 use super::error::{DatabaseError, Result};
 use crate::models::{Bar, Tick};
-use backtestr_core::Timeframe;
+use crate::timeframe::Timeframe;
 use chrono::{DateTime, Utc};
 use rusqlite::params;
 use std::str::FromStr;
