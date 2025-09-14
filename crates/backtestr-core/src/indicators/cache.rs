@@ -55,10 +55,7 @@ impl IndicatorCache {
     /// * `timeframe` - Timeframe context
     /// * `value` - The indicator value to cache
     pub fn insert(&self, indicator_name: String, timeframe: Timeframe, value: IndicatorValue) {
-        let mut entry = self
-            .values
-            .entry((indicator_name, timeframe))
-            .or_default();
+        let mut entry = self.values.entry((indicator_name, timeframe)).or_default();
 
         entry.push_back(value);
 
