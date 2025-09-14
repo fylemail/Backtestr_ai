@@ -117,19 +117,10 @@ impl MarketHours {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct MarketSchedule {
     pub holidays: HashSet<NaiveDate>,
     pub early_closes: HashMap<NaiveDate, NaiveTime>,
-}
-
-impl Default for MarketSchedule {
-    fn default() -> Self {
-        MarketSchedule {
-            holidays: HashSet::new(),
-            early_closes: HashMap::new(),
-        }
-    }
 }
 
 impl MarketSchedule {

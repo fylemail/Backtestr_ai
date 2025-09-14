@@ -311,27 +311,26 @@ impl BarAggregator {
 
         for timeframe in timeframes {
             let pending = self.pending_bars.get(&timeframe).unwrap();
-            if !pending.is_empty() {
-                if self
+            if !pending.is_empty()
+                && self
                     .session_manager
                     .is_session_boundary(timeframe, timestamp)
-                {
-                    if let Some(bar) = self.aggregate_standard(pending, timeframe) {
-                        closed_bars.push(bar.clone());
+            {
+                if let Some(bar) = self.aggregate_standard(pending, timeframe) {
+                    closed_bars.push(bar.clone());
 
-                        // Prepare completion event
-                        let event = match timeframe {
-                            Timeframe::M5 => BarCompletionEvent::FiveMinuteBar(bar),
-                            Timeframe::M15 => BarCompletionEvent::FifteenMinuteBar(bar),
-                            Timeframe::H1 => BarCompletionEvent::HourBar(bar),
-                            Timeframe::H4 => BarCompletionEvent::FourHourBar(bar),
-                            Timeframe::D1 => BarCompletionEvent::DailyBar(bar),
-                            _ => BarCompletionEvent::MinuteBar(bar),
-                        };
-                        events_to_publish.push(event);
+                    // Prepare completion event
+                    let event = match timeframe {
+                        Timeframe::M5 => BarCompletionEvent::FiveMinuteBar(bar),
+                        Timeframe::M15 => BarCompletionEvent::FifteenMinuteBar(bar),
+                        Timeframe::H1 => BarCompletionEvent::HourBar(bar),
+                        Timeframe::H4 => BarCompletionEvent::FourHourBar(bar),
+                        Timeframe::D1 => BarCompletionEvent::DailyBar(bar),
+                        _ => BarCompletionEvent::MinuteBar(bar),
+                    };
+                    events_to_publish.push(event);
 
-                        self.pending_bars.get_mut(&timeframe).unwrap().clear();
-                    }
+                    self.pending_bars.get_mut(&timeframe).unwrap().clear();
                 }
             }
         }

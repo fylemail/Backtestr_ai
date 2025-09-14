@@ -1,15 +1,8 @@
 use backtestr_data::models::Bar;
 
+#[derive(Default)]
 pub struct VolumeAggregator {
     volume_weighted: bool,
-}
-
-impl Default for VolumeAggregator {
-    fn default() -> Self {
-        Self {
-            volume_weighted: false,
-        }
-    }
 }
 
 impl VolumeAggregator {
