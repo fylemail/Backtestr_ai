@@ -22,6 +22,7 @@ backtestr-data = { path = "../backtestr-data" }
 
 # Core-specific dependencies
 chrono = { version = "0.4", features = ["serde"] }
+chrono-tz = "0.8"
 ordered-float = "4.2"
 dashmap = "5.5"
 
