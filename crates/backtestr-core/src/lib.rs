@@ -3,11 +3,13 @@
 //! This crate provides the multi-timeframe state engine that maintains
 //! synchronized bar states across 6 timeframes with sub-100μs updates.
 
+pub mod aggregation;
 pub mod data;
 pub mod engine;
 pub mod events;
 pub mod indicators;
 pub mod mtf;
+pub mod persistence;
 pub mod positions;
 pub mod python;
 
