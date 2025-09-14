@@ -3,14 +3,14 @@
 //! This module provides a mock implementation of the position management
 //! interfaces to test integration with the Epic 2 MTF engine.
 
-use crate::events::{EventHandler, TickEvent, BarEvent};
+use crate::events::{BarEvent, EventHandler, TickEvent};
 use crate::indicators::IndicatorValue;
 use crate::interfaces::{
     ExecutionModel, OrderSide, PositionEventHandler, PositionSnapshot, PositionStateStore,
     TradeEvent, TradeLogger,
 };
-use backtestr_data::{Bar, Tick, Timeframe};
 use anyhow::{anyhow, Result};
+use backtestr_data::{Bar, Tick, Timeframe};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 use std::time::Instant;
@@ -195,22 +195,34 @@ impl MockPositionManager {
         println!("\n=== Mock Position Manager Performance Report ===");
         println!("Tick Events:");
         println!("  Count: {}", metrics.tick_count);
-        println!("  Average processing: {:.2}μs", metrics.average_tick_time_us());
+        println!(
+            "  Average processing: {:.2}μs",
+            metrics.average_tick_time_us()
+        );
         println!("  Max processing: {}μs", metrics.max_tick_time_us);
 
         println!("\nBar Events:");
         println!("  Count: {}", metrics.bar_count);
-        println!("  Average processing: {:.2}μs", metrics.average_bar_time_us());
+        println!(
+            "  Average processing: {:.2}μs",
+            metrics.average_bar_time_us()
+        );
         println!("  Max processing: {}μs", metrics.max_bar_time_us);
 
         println!("\nIndicator Events:");
         println!("  Count: {}", metrics.indicator_count);
-        println!("  Average processing: {:.2}μs", metrics.average_indicator_time_us());
+        println!(
+            "  Average processing: {:.2}μs",
+            metrics.average_indicator_time_us()
+        );
         println!("  Max processing: {}μs", metrics.max_indicator_time_us);
 
         println!("\nPositions:");
         println!("  Open: {}", self.positions.lock().unwrap().len());
-        println!("  Trade events logged: {}", self.trade_events.lock().unwrap().len());
+        println!(
+            "  Trade events logged: {}",
+            self.trade_events.lock().unwrap().len()
+        );
         println!("================================================\n");
     }
 }
@@ -301,7 +313,12 @@ impl PositionEventHandler for MockPositionManager {
         }
     }
 
-    fn on_indicator_update(&mut self, indicator: &IndicatorValue, timeframe: Timeframe, symbol: &str) {
+    fn on_indicator_update(
+        &mut self,
+        indicator: &IndicatorValue,
+        timeframe: Timeframe,
+        symbol: &str,
+    ) {
         let start = Instant::now();
 
         // Log indicator updates
@@ -345,8 +362,12 @@ impl TradeLogger for MockPositionManager {
             .filter(|event| match event {
                 TradeEvent::OrderPlaced { id, .. } => id == position_id,
                 TradeEvent::OrderFilled { id, .. } => id == position_id,
-                TradeEvent::StopLossTriggered { position_id: id, .. } => id == position_id,
-                TradeEvent::TakeProfitTriggered { position_id: id, .. } => id == position_id,
+                TradeEvent::StopLossTriggered {
+                    position_id: id, ..
+                } => id == position_id,
+                TradeEvent::TakeProfitTriggered {
+                    position_id: id, ..
+                } => id == position_id,
                 TradeEvent::PositionClosed { id, .. } => id == position_id,
                 _ => false,
             })
@@ -401,11 +422,7 @@ impl PositionStateStore for MockPositionStateStore {
     }
 
     fn get_latest_snapshot_time(&self) -> Option<i64> {
-        self.snapshots
-            .lock()
-            .unwrap()
-            .last()
-            .map(|s| s.timestamp)
+        self.snapshots.lock().unwrap().last().map(|s| s.timestamp)
     }
 }
 

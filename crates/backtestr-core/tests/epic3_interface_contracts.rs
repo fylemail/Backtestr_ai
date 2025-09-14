@@ -129,7 +129,8 @@ fn test_interface_compilation() {
             _indicator: &backtestr_core::indicators::IndicatorValue,
             _timeframe: Timeframe,
             _symbol: &str,
-        ) {}
+        ) {
+        }
     }
 
     impl ExecutionContext for DummyExecutionContext {

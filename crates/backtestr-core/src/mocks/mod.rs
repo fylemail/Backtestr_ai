@@ -5,6 +5,4 @@
 
 pub mod mock_position_manager;
 
-pub use mock_position_manager::{
-    MockPositionManager, MockPositionStateStore, PerformanceMetrics,
-};
+pub use mock_position_manager::{MockPositionManager, MockPositionStateStore, PerformanceMetrics};

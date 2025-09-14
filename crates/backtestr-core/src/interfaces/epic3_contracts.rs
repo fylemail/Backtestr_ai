@@ -7,8 +7,8 @@
 
 use crate::events::EventHandler;
 use crate::indicators::IndicatorValue;
-use backtestr_data::{Bar, Tick, Timeframe};
 use anyhow::Result;
+use backtestr_data::{Bar, Tick, Timeframe};
 use serde::{Deserialize, Serialize};
 
 /// Extension of existing EventHandler trait for position management
@@ -37,7 +37,12 @@ pub trait PositionEventHandler: EventHandler {
     /// * `indicator` - The updated indicator value
     /// * `timeframe` - The timeframe of the indicator
     /// * `symbol` - The symbol for which the indicator was calculated
-    fn on_indicator_update(&mut self, indicator: &IndicatorValue, timeframe: Timeframe, symbol: &str);
+    fn on_indicator_update(
+        &mut self,
+        indicator: &IndicatorValue,
+        timeframe: Timeframe,
+        symbol: &str,
+    );
 }
 
 /// Provides market context for order execution
