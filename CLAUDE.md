@@ -3,8 +3,8 @@
 ## Current Development Focus
 
 **Active Epic**: Epic 2 - Multi-Timeframe Synchronization Engine
-**Current Story**: 2.0 - Data Model Foundation ✅ COMPLETE (Ready for merge)
-**Next Story**: 2.1 - MTF State Synchronization (Ready to start)
+**Current Story**: 2.1 - MTF State Synchronization (Starting)
+**Previous Story**: 2.0 - Data Model Foundation ✅ COMPLETE (Merged)
 **Development Philosophy**: Build ONLY what current epic needs
 **Note**: SQLite chosen over DuckDB in Epic 1 - maintaining this decision
 
@@ -27,7 +27,7 @@
 ## What We're Building NOW (Epic 2)
 
 ✅ **Bar/Candle Data Model** - OHLCV structures (Story 2.0 COMPLETE)
-🚧 **MTF Synchronization** - Multi-timeframe state engine (Story 2.1 NEXT)
+🚧 **MTF Synchronization** - Multi-timeframe state engine (Story 2.1 IN PROGRESS)
 🚧 **Indicator Pipeline** - 20 core indicators (Story 2.2)
 🚧 **State Persistence** - Checkpoint/recovery system (Story 2.4)  
 
@@ -155,12 +155,13 @@ git checkout -b story/STORY-2.0-data-model-foundation
 - [x] Timeframe enumeration
 - [x] Tick-to-bar aggregation
 - [x] SQLite schema extension
-**Status:** Ready for Review - QA PASSED
+**Status:** Merged to develop
 
-### Story 2.1: MTF State Synchronization
+### Story 2.1: MTF State Synchronization (IN PROGRESS)
 - [ ] In-memory MTF engine
 - [ ] Event-driven tick processing
 - [ ] Partial bar tracking
+**Status:** Development Starting
 
 ### Story 2.2: Indicator Pipeline
 - [ ] 20 core indicators

@@ -1,5 +1,5 @@
 use crate::models::{Bar, Tick};
-use backtestr_core::Timeframe;
+use crate::timeframe::Timeframe;
 use std::collections::HashMap;
 
 /// Aggregates ticks into bars for multiple timeframes

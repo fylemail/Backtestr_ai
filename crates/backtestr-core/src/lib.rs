@@ -5,13 +5,17 @@
 
 pub mod data;
 pub mod engine;
+pub mod events;
 pub mod indicators;
+pub mod mtf;
 pub mod positions;
 pub mod python;
-pub mod timeframe;
 
 pub use engine::MTFEngine;
-pub use timeframe::Timeframe;
+pub use mtf::{MTFConfig, MTFStateManager, StateQuery};
+
+// Re-export Timeframe from data crate
+pub use backtestr_data::Timeframe;
 
 #[cfg(test)]
 mod tests {

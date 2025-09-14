@@ -6,8 +6,8 @@ fn main() {
 
     writeln!(file, "symbol,timestamp,bid,ask,bid_size,ask_size").expect("Failed to write header");
 
-    let symbols = vec!["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"];
-    let base_prices = vec![1.0921, 1.2500, 141.500, 0.6850, 1.3200];
+    let symbols = ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"];
+    let base_prices = [1.0921, 1.2500, 141.500, 0.6850, 1.3200];
 
     // Start at Unix timestamp 1704067200 (2024-01-01 00:00:00 UTC)
     let mut timestamp = 1704067200i64;
