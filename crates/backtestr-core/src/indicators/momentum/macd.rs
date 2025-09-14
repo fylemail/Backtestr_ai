@@ -2,19 +2,20 @@ use crate::indicators::indicator_trait::{BarData, Indicator};
 
 #[derive(Debug)]
 pub struct MACD {
+    #[allow(dead_code)]
     fast_period: usize,
     slow_period: usize,
     signal_period: usize,
-    fast_ema: EMA,
-    slow_ema: EMA,
-    signal_ema: EMA,
+    fast_ema: Ema,
+    slow_ema: Ema,
+    signal_ema: Ema,
     current_macd: Option<f64>,
     current_signal: Option<f64>,
     current_histogram: Option<f64>,
 }
 
 #[derive(Debug)]
-struct EMA {
+struct Ema {
     period: usize,
     multiplier: f64,
     current_value: Option<f64>,
@@ -22,7 +23,7 @@ struct EMA {
     sma_sum: f64,
 }
 
-impl EMA {
+impl Ema {
     fn new(period: usize) -> Self {
         let multiplier = 2.0 / (period as f64 + 1.0);
         Self {
@@ -73,9 +74,9 @@ impl MACD {
             fast_period,
             slow_period,
             signal_period,
-            fast_ema: EMA::new(fast_period),
-            slow_ema: EMA::new(slow_period),
-            signal_ema: EMA::new(signal_period),
+            fast_ema: Ema::new(fast_period),
+            slow_ema: Ema::new(slow_period),
+            signal_ema: Ema::new(signal_period),
             current_macd: None,
             current_signal: None,
             current_histogram: None,

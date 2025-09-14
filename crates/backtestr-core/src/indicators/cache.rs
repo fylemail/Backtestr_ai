@@ -58,7 +58,7 @@ impl IndicatorCache {
         let mut entry = self
             .values
             .entry((indicator_name, timeframe))
-            .or_insert_with(VecDeque::new);
+            .or_default();
 
         entry.push_back(value);
 
@@ -104,7 +104,7 @@ impl IndicatorCache {
             .get(&(indicator_name.to_string(), timeframe))
             .map(|values| {
                 let len = values.len();
-                let start = if len > count { len - count } else { 0 };
+                let start = len.saturating_sub(count);
                 values.range(start..).copied().collect()
             })
             .unwrap_or_default()

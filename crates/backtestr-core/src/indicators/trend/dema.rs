@@ -3,13 +3,13 @@ use crate::indicators::indicator_trait::{BarData, Indicator};
 #[derive(Debug)]
 pub struct DEMA {
     period: usize,
-    ema1: EMA,
-    ema2: EMA,
+    ema1: Ema,
+    ema2: Ema,
     current_value: Option<f64>,
 }
 
 #[derive(Debug)]
-struct EMA {
+struct Ema {
     period: usize,
     multiplier: f64,
     current_value: Option<f64>,
@@ -17,7 +17,7 @@ struct EMA {
     sma_sum: f64,
 }
 
-impl EMA {
+impl Ema {
     fn new(period: usize) -> Self {
         let multiplier = 2.0 / (period as f64 + 1.0);
         Self {
@@ -59,8 +59,8 @@ impl DEMA {
     pub fn new(period: usize) -> Self {
         Self {
             period,
-            ema1: EMA::new(period),
-            ema2: EMA::new(period),
+            ema1: Ema::new(period),
+            ema2: Ema::new(period),
             current_value: None,
         }
     }

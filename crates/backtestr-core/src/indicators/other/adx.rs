@@ -17,10 +17,10 @@ use std::collections::VecDeque;
 #[derive(Debug)]
 pub struct ADX {
     period: usize,
-    plus_dm_ema: EMA,
-    minus_dm_ema: EMA,
-    atr_ema: EMA,
-    dx_ema: EMA,
+    plus_dm_ema: Ema,
+    minus_dm_ema: Ema,
+    atr_ema: Ema,
+    dx_ema: Ema,
     previous_high: Option<f64>,
     previous_low: Option<f64>,
     dx_values: VecDeque<f64>,
@@ -29,13 +29,14 @@ pub struct ADX {
 
 /// Simple EMA implementation for internal use
 #[derive(Debug)]
-struct EMA {
+struct Ema {
+    #[allow(dead_code)]
     period: usize,
     multiplier: f64,
     value: Option<f64>,
 }
 
-impl EMA {
+impl Ema {
     fn new(period: usize) -> Self {
         Self {
             period,
@@ -68,10 +69,10 @@ impl ADX {
     pub fn new(period: usize) -> Self {
         Self {
             period,
-            plus_dm_ema: EMA::new(period),
-            minus_dm_ema: EMA::new(period),
-            atr_ema: EMA::new(period),
-            dx_ema: EMA::new(period),
+            plus_dm_ema: Ema::new(period),
+            minus_dm_ema: Ema::new(period),
+            atr_ema: Ema::new(period),
+            dx_ema: Ema::new(period),
             previous_high: None,
             previous_low: None,
             dx_values: VecDeque::with_capacity(period),

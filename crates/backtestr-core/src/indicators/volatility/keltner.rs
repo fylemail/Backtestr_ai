@@ -4,15 +4,15 @@ use crate::indicators::indicator_trait::{BarData, Indicator};
 pub struct KeltnerChannels {
     period: usize,
     multiplier: f64,
-    ema: EMA,
-    atr: ATR,
+    ema: Ema,
+    atr: Atr,
     current_middle: Option<f64>,
     current_upper: Option<f64>,
     current_lower: Option<f64>,
 }
 
 #[derive(Debug)]
-struct EMA {
+struct Ema {
     period: usize,
     multiplier: f64,
     current_value: Option<f64>,
@@ -21,7 +21,7 @@ struct EMA {
 }
 
 #[derive(Debug)]
-struct ATR {
+struct Atr {
     period: usize,
     current_atr: Option<f64>,
     previous_close: Option<f64>,
@@ -29,7 +29,7 @@ struct ATR {
     tr_sum: f64,
 }
 
-impl EMA {
+impl Ema {
     fn new(period: usize) -> Self {
         let multiplier = 2.0 / (period as f64 + 1.0);
         Self {
@@ -67,7 +67,7 @@ impl EMA {
     }
 }
 
-impl ATR {
+impl Atr {
     fn new(period: usize) -> Self {
         Self {
             period,
@@ -129,8 +129,8 @@ impl KeltnerChannels {
         Self {
             period,
             multiplier,
-            ema: EMA::new(period),
-            atr: ATR::new(period),
+            ema: Ema::new(period),
+            atr: Atr::new(period),
             current_middle: None,
             current_upper: None,
             current_lower: None,

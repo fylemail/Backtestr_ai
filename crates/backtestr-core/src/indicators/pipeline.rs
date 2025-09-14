@@ -50,6 +50,7 @@ use super::indicator_trait::{BarData, Indicator, IndicatorDefaults, IndicatorVal
 pub struct IndicatorPipeline {
     indicators: Arc<DashMap<String, Box<dyn Indicator<Input = BarData, Output = f64>>>>,
     cache: IndicatorCache,
+    #[allow(dead_code)]
     defaults: IndicatorDefaults,
     parallel_threshold: usize,
 }
@@ -116,7 +117,7 @@ impl IndicatorPipeline {
         for mut entry in self.indicators.iter_mut() {
             let (name, indicator) = entry.pair_mut();
 
-            if let Some(value) = indicator.update(bar.clone()) {
+            if let Some(value) = indicator.update(*bar) {
                 let indicator_value = IndicatorValue {
                     value,
                     timestamp: bar.timestamp,
@@ -138,7 +139,7 @@ impl IndicatorPipeline {
             .par_bridge()
             .map(|mut entry| {
                 let (name, indicator) = entry.pair_mut();
-                let result = indicator.update(bar.clone());
+                let result = indicator.update(*bar);
                 (name.clone(), result)
             })
             .collect();
