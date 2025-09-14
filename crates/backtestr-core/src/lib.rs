@@ -9,6 +9,7 @@ pub mod engine;
 pub mod events;
 pub mod indicators;
 pub mod mtf;
+pub mod persistence;
 pub mod positions;
 pub mod python;
 
