@@ -2,9 +2,10 @@
 
 ## Current Development Focus
 
-**Active Epic**: Epic 1 - Foundation & Core Data Pipeline  
-**Current Story**: Epic 1 Complete! 🎉 Planning 1.6  
+**Active Epic**: Transitioning Epic 1 → Epic 2
+**Current Story**: Epic 2 Pre-Planning & Alignment
 **Development Philosophy**: Build ONLY what current epic needs
+**Note**: SQLite chosen over DuckDB in Epic 1 - maintaining this decision
 
 ## Critical Boundaries - DO NOT BUILD YET
 
@@ -131,11 +132,33 @@ git checkout -b story/STORY-1.2-basic-sqlite
 
 **Epic 1 Status: COMPLETE** ✅
 
-## Story 1.6: Epic 1 Polish & Documentation (NEW)
-- [ ] Comprehensive README update
-- [ ] API documentation
-- [ ] Performance report
-- [ ] Epic 1 retrospective
+## Epic 2 Story Planning (NEW)
+
+### Story 2.0: Data Model Foundation (NEW - Critical)
+- [ ] Bar/Candle data structures
+- [ ] Timeframe enumeration
+- [ ] Tick-to-bar aggregation
+- [ ] SQLite schema extension
+
+### Story 2.1: MTF State Synchronization
+- [ ] In-memory MTF engine
+- [ ] Event-driven tick processing
+- [ ] Partial bar tracking
+
+### Story 2.2: Indicator Pipeline
+- [ ] 20 core indicators
+- [ ] Incremental calculation
+- [ ] Per-timeframe caching
+
+### Story 2.3: Advanced Bar Formation
+- [ ] Weekend gap handling
+- [ ] Session boundaries
+- [ ] Bar completion events
+
+### Story 2.4: State Persistence
+- [ ] State serialization
+- [ ] Recovery mechanisms
+- [ ] Hybrid storage strategy
 
 ## Questions to Ask Yourself
 
