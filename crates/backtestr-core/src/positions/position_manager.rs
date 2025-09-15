@@ -814,8 +814,7 @@ impl PositionEventHandler for PositionManager {
                         position.update_price(bar.close);
 
                         // Check for stop loss or take profit triggers
-                        if position.is_stop_loss_triggered()
-                            || position.is_take_profit_triggered()
+                        if position.is_stop_loss_triggered() || position.is_take_profit_triggered()
                         {
                             let _ = self.close_position(id, bar.close, bar.timestamp_end);
                         }
@@ -848,8 +847,7 @@ impl PositionEventHandler for PositionManager {
                         position.update_price(update_price);
 
                         // Check for stop loss or take profit triggers
-                        if position.is_stop_loss_triggered()
-                            || position.is_take_profit_triggered()
+                        if position.is_stop_loss_triggered() || position.is_take_profit_triggered()
                         {
                             let _ = self.close_position(id, update_price, tick.timestamp);
                         }
