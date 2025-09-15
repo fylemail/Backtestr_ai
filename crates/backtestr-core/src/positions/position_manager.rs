@@ -111,6 +111,7 @@ impl PositionManager {
     }
 
     /// Open a new position
+    #[allow(clippy::too_many_arguments)]
     pub fn open_position(
         &self,
         symbol: String,

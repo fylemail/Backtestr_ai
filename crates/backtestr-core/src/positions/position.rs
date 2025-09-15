@@ -76,6 +76,7 @@ impl Position {
     }
 
     /// Create a new position with full parameters
+    #[allow(clippy::too_many_arguments)]
     pub fn new_with_params(
         symbol: String,
         side: PositionSide,
