@@ -415,10 +415,7 @@ impl PositionManager {
             TradeEvent::MarginCall { .. } => "margin_calls".to_string(),
         };
 
-        self.trade_events
-            .entry(key)
-            .or_default()
-            .push(event);
+        self.trade_events.entry(key).or_default().push(event);
     }
 
     /// Get trade events for a position
