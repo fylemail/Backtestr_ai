@@ -123,10 +123,7 @@ impl PositionStateStore for PositionPersistence {
     fn is_compatible_with_mtf(&self, mtf_version: &str) -> bool {
         // Simple version compatibility check
         // In production, this would be more sophisticated
-        match mtf_version {
-            "1.0.0" | "1.0.1" | "1.1.0" => true,
-            _ => false,
-        }
+        matches!(mtf_version, "1.0.0" | "1.0.1" | "1.1.0")
     }
 
     /// Clear all position snapshots
